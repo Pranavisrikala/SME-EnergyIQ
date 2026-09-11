@@ -1,0 +1,46 @@
+{
+    "COMPRESSOR_01": {
+        "name": "Screw Air Compressor",
+        "health_score": 100,
+        "risk_level": "LOW",
+        "power_kw": 31.757,
+        "temp_c": 70.96,
+        "vib_mm_s": 2.405,
+        "iso_vib_zone": "ZONE_B_SATISFACTORY",
+        "status": "RUNNING_OPTIMAL",
+        "severity": "NORMAL"
+    },
+    "HVAC_01": {
+        "name": "Humidification & Climate Plant",
+        "health_score": 100,
+        "risk_level": "LOW",
+        "power_kw": 44.206,
+        "temp_c": 43.37,
+        "vib_mm_s": 1.717,
+        "iso_vib_zone": "ZONE_A_GOOD",
+        "status": "RUNNING_OPTIMAL",
+        "severity": "NORMAL"
+    },
+    "MOTOR_01": {
+        "name": "Ring Spinning Frame Motor",
+        "health_score": 100,
+        "risk_level": "LOW",
+        "power_kw": 38.101,
+        "temp_c": 58.59,
+        "vib_mm_s": 1.777,
+        "iso_vib_zone": "ZONE_A_GOOD",
+        "status": "RUNNING_OPTIMAL",
+        "severity": "NORMAL"
+    },
+    "PUMP_01": {
+        "name": "Dyeing Liquor Circulation Pump",
+        "health_score": 100,
+        "risk_level": "LOW",
+        "power_kw": 15.72,
+        "temp_c": 48.5,
+        "vib_mm_s": 1.403,
+        "iso_vib_zone": "ZONE_A_GOOD",
+        "status": "RUNNING_OPTIMAL",
+        "severity": "NORMAL"
+    }
+}

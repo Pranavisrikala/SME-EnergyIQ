@@ -1,0 +1,101 @@
+{
+    "factory_overview": {
+        "total_energy_kwh": 42002.64,
+        "total_cost_rs": 300438.41,
+        "average_cost_per_kwh_rs": 7.15,
+        "peak_demand_kw": 179.94,
+        "average_demand_kw": 125.01,
+        "baseline_factory_sec_kwh_per_kg": 0.696,
+        "total_yarn_production_kg": 60338.1,
+        "idle_energy_waste_kwh": 811.92,
+        "idle_energy_waste_cost_rs": 6619.88
+    },
+    "machine_breakdown": {
+        "COMPRESSOR_01": {
+            "type": "Air Compressor",
+            "total_energy_kwh": 10710.58,
+            "share_of_factory_pct": 25.5,
+            "total_cost_rs": 76723.46,
+            "total_production": 259541.3,
+            "sec_kwh_per_unit": 0.0413,
+            "peak_power_kw": 39.67,
+            "avg_power_kw": 31.88
+        },
+        "HVAC_01": {
+            "type": "HVAC System",
+            "total_energy_kwh": 13562.26,
+            "share_of_factory_pct": 32.29,
+            "total_cost_rs": 97017.79,
+            "total_production": 1508103.1,
+            "sec_kwh_per_unit": 0.009,
+            "peak_power_kw": 96.66,
+            "avg_power_kw": 40.36
+        },
+        "MOTOR_01": {
+            "type": "Spinning Motor",
+            "total_energy_kwh": 12668.76,
+            "share_of_factory_pct": 30.16,
+            "total_cost_rs": 90544.27,
+            "total_production": 60338.1,
+            "sec_kwh_per_unit": 0.21,
+            "peak_power_kw": 57.51,
+            "avg_power_kw": 37.7
+        },
+        "PUMP_01": {
+            "type": "Water Pump",
+            "total_energy_kwh": 5061.04,
+            "share_of_factory_pct": 12.05,
+            "total_cost_rs": 36152.88,
+            "total_production": 34880.2,
+            "sec_kwh_per_unit": 0.1451,
+            "peak_power_kw": 22.98,
+            "avg_power_kw": 15.06
+        }
+    },
+    "operating_state_breakdown": {
+        "IDLE_UNLOADED": {
+            "total_kwh": 811.92,
+            "share_pct": 1.93,
+            "cost_rs": 6619.88,
+            "intervals_count": 243
+        },
+        "MAINTENANCE": {
+            "total_kwh": 0.0,
+            "share_pct": 0.0,
+            "cost_rs": 0.0,
+            "intervals_count": 128
+        },
+        "RUNNING_DEGRADED": {
+            "total_kwh": 207.12,
+            "share_pct": 0.49,
+            "cost_rs": 1553.43,
+            "intervals_count": 17
+        },
+        "RUNNING_OPTIMAL": {
+            "total_kwh": 40983.6,
+            "share_pct": 97.57,
+            "cost_rs": 292265.1,
+            "intervals_count": 4988
+        }
+    },
+    "tariff_window_breakdown": {
+        "NORMAL": {
+            "total_kwh": 20704.75,
+            "share_pct": 49.29,
+            "cost_rs": 155285.61,
+            "cost_share_pct": 51.69
+        },
+        "OFF_PEAK": {
+            "total_kwh": 15072.47,
+            "share_pct": 35.88,
+            "cost_rs": 82898.6,
+            "cost_share_pct": 27.59
+        },
+        "PEAK": {
+            "total_kwh": 6225.42,
+            "share_pct": 14.82,
+            "cost_rs": 62254.2,
+            "cost_share_pct": 20.72
+        }
+    }
+}

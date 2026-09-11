@@ -1,0 +1,265 @@
+{
+    "metrics": {
+        "Total_Energy_kWh": {
+            "baseline": 3193.71,
+            "optimized": 3180.31,
+            "unit": "kWh"
+        },
+        "Total_Cost_Rs": {
+            "baseline": 23575.5,
+            "optimized": 22447.71,
+            "unit": "Rs.",
+            "savings": 1127.79,
+            "improvement_pct": 4.78
+        },
+        "Peak_Demand_kW": {
+            "baseline": 154.89,
+            "optimized": 142.38,
+            "unit": "kW",
+            "reduction_kw": 12.51,
+            "improvement_pct": 8.08
+        },
+        "Yarn_Production_kg": {
+            "baseline": 4500.0,
+            "optimized": 4500.0,
+            "unit": "kg",
+            "note": "100% Exact Throughput Conserved"
+        },
+        "Specific_Energy_Consumption_SEC": {
+            "baseline": 0.7097,
+            "optimized": 0.7067,
+            "unit": "kWh/kg",
+            "improvement_pct": 0.42
+        },
+        "CO2_Emissions_kg": {
+            "baseline": 2618.84,
+            "optimized": 2607.85,
+            "unit": "kg CO2e",
+            "avoided_kg": 10.99
+        },
+        "Carbon_Intensity_kg_CO2e_per_kg_yarn": {
+            "baseline": 0.582,
+            "optimized": 0.5795,
+            "unit": "kg CO2e/kg",
+            "improvement_pct": 0.42,
+            "note": "Modeled Scope 2 CO2e per kg of finished yarn output"
+        }
+    },
+    "milp_model_summary": {
+        "model_type": "Mixed-Integer Linear Program (MILP)",
+        "solver": "PuLP COIN-OR CBC",
+        "solver_status": "Optimal",
+        "solve_duration_seconds": 1.4403,
+        "variable_counts": {
+            "continuous": 193,
+            "binary": 48,
+            "integer": 0,
+            "total": 241
+        },
+        "constraint_count": 412
+    },
+    "dyeing_batch_summary": {
+        "batch_duration_hours": 3,
+        "min_operating_rate_m3_h": 80.0,
+        "max_hourly_rate_m3_h": 180.0,
+        "daily_target_m3": 2500.0,
+        "base_power_kw": 4.5,
+        "marginal_kw_per_unit": 0.105,
+        "allow_horizon_wrap": false,
+        "optimized_batch_count": 5,
+        "optimized_batches": [
+            {
+                "batch_id": "OPT_BATCH_01",
+                "start_hour": 0,
+                "hours": [
+                    0,
+                    1,
+                    2
+                ],
+                "duration": 3
+            },
+            {
+                "batch_id": "OPT_BATCH_02",
+                "start_hour": 3,
+                "hours": [
+                    3,
+                    4,
+                    5
+                ],
+                "duration": 3
+            },
+            {
+                "batch_id": "OPT_BATCH_03",
+                "start_hour": 6,
+                "hours": [
+                    6,
+                    7,
+                    8
+                ],
+                "duration": 3
+            },
+            {
+                "batch_id": "OPT_BATCH_04",
+                "start_hour": 10,
+                "hours": [
+                    10,
+                    11,
+                    12
+                ],
+                "duration": 3
+            },
+            {
+                "batch_id": "OPT_BATCH_05",
+                "start_hour": 15,
+                "hours": [
+                    15,
+                    16,
+                    17
+                ],
+                "duration": 3
+            }
+        ],
+        "baseline_batch_count": 6,
+        "baseline_batches": [
+            {
+                "batch_id": "BASE_BATCH_01",
+                "start_hour": 0,
+                "hours": [
+                    0,
+                    1,
+                    2
+                ],
+                "duration": 3
+            },
+            {
+                "batch_id": "BASE_BATCH_02",
+                "start_hour": 3,
+                "hours": [
+                    3,
+                    4,
+                    5
+                ],
+                "duration": 3
+            },
+            {
+                "batch_id": "BASE_BATCH_03",
+                "start_hour": 6,
+                "hours": [
+                    6,
+                    7,
+                    8
+                ],
+                "duration": 3
+            },
+            {
+                "batch_id": "BASE_BATCH_04",
+                "start_hour": 9,
+                "hours": [
+                    9,
+                    10,
+                    11
+                ],
+                "duration": 3
+            },
+            {
+                "batch_id": "BASE_BATCH_05",
+                "start_hour": 12,
+                "hours": [
+                    12,
+                    13,
+                    14
+                ],
+                "duration": 3
+            },
+            {
+                "batch_id": "BASE_BATCH_06",
+                "start_hour": 15,
+                "hours": [
+                    15,
+                    16,
+                    17
+                ],
+                "duration": 3
+            }
+        ],
+        "programmatic_batch_validation": {
+            "is_valid": true,
+            "errors": [],
+            "batch_continuity_enforced": true,
+            "no_late_starts_enforced": true,
+            "no_overlaps_enforced": true
+        },
+        "simulation_assumption_disclaimer": "Simulation assumption \u2014 not measured factory data."
+    },
+    "health_aware_summary": {
+        "machines_normal_count": 4,
+        "machines_medium_count": 0,
+        "machines_high_count": 0,
+        "machines_critical_count": 0,
+        "health_restricted_machine_hours": 0,
+        "maintenance_unavailable_machine_hours": 0,
+        "production_preservation_pct": 100.0,
+        "solver_status": "Optimal",
+        "is_feasible": true,
+        "infeasibility_reasons": [],
+        "health_derating_policy": {
+            "NORMAL": 1.0,
+            "MEDIUM": 1.0,
+            "HIGH": 0.85,
+            "CRITICAL": 0.0
+        },
+        "machine_conditions": {
+            "MOTOR_01": {
+                "health_score": 100,
+                "risk_level": "LOW",
+                "severity": "NORMAL",
+                "operational_availability": "AVAILABLE"
+            },
+            "COMPRESSOR_01": {
+                "health_score": 100,
+                "risk_level": "LOW",
+                "severity": "NORMAL",
+                "operational_availability": "AVAILABLE"
+            },
+            "PUMP_01": {
+                "health_score": 100,
+                "risk_level": "LOW",
+                "severity": "NORMAL",
+                "operational_availability": "AVAILABLE"
+            },
+            "HVAC_01": {
+                "health_score": 100,
+                "risk_level": "LOW",
+                "severity": "NORMAL",
+                "operational_availability": "AVAILABLE"
+            }
+        }
+    },
+    "process_dependency_summary": {
+        "hvac_spinning_coupling": {
+            "primary_asset": "MOTOR_01 (Ring Spinning Frame)",
+            "support_asset": "HVAC_01 (Spinning Hall Humidification & Climate Control)",
+            "coupling_ratio_gamma_m3_per_kg": 22.6957,
+            "support_ratio_k": 0.9,
+            "constraint_formulation": "X[HVAC_01, h] >= gamma * X[MOTOR_01, h]",
+            "dependency_satisfied_all_hours": true,
+            "min_hourly_margin_m3": 0.0,
+            "status": "ACTIVE_AND_ENFORCED"
+        },
+        "compressor_decoupling_rationale": "COMPRESSOR_01 supplies compressed air primarily to pneumatic actuators and weaving (air-jet looms), which are not modeled as separate decision variables in this 4-asset system. Receiver tank storage buffers provide decoupling, allowing compressor flex-scheduling against ToD tariffs without rigid coupling to spinning.",
+        "pump_decoupling_rationale": "PUMP_01 supplies water to the yarn dyeing process, which is decoupled from ring spinning by intermediate yarn inventory buffers (bobbins/cones in storage). Continuous multi-hour batch constraints are enforced in Phase 5."
+    },
+    "assumptions": {
+        "grid_emission_factor_kg_per_kwh": 0.82,
+        "grid_emission_factor_disclaimer": "Simulation benchmark assumption \u2014 not an audited plant-specific electricity emission factor.",
+        "tariffs_used": {
+            "peak_18_to_22": 10.0,
+            "normal_06_to_18": 7.5,
+            "off_peak_22_to_06": 5.5
+        },
+        "solver_used": "PuLP CBC MILP (Mixed-Integer Linear Program)",
+        "health_derating_policy": "Simulation assumptions: HIGH=85% max capacity, CRITICAL=0% (restricted), NORMAL/MEDIUM=100%",
+        "process_dependency_coupling": "HVAC-Spinning proportional coupling (k=0.9, gamma=22.6957 m3/kg)",
+        "dyeing_batch_specs": "Simulation assumption: 3-hour continuous batch, min operating rate 80 m3/h, 4.5 kW active base power (0 kW when inactive)"
+    }
+}

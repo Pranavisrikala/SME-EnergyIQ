@@ -1,0 +1,43 @@
+# ==============================================================================
+# SME-EnergyIQ: Git Ignore Configuration
+# ==============================================================================
+
+# Virtual Environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# Python Bytecode & Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# IDE & Editor Configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing & Type Checking Artifacts
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Logs & Temporary Files
+*.log
+*.tmp
+
+# Operating System Metadata
+.DS_Store
+Thumbs.db
+desktop.ini

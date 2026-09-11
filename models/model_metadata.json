@@ -1,0 +1,87 @@
+{
+    "version": "V2_MACHINE_SPECIFIC",
+    "model_type": "IsolationForest",
+    "n_estimators": 150,
+    "contamination": 0.025,
+    "features": [
+        "Power_kW",
+        "Temperature_C",
+        "Vibration_mm_s",
+        "RPM",
+        "Load_Ratio",
+        "Temp_Elevation",
+        "Excess_Idle_Power",
+        "Vib_Elevation",
+        "RPM_Drop"
+    ],
+    "trained_at": "2026-09-11T14:43:29.017912",
+    "assets_trained": [
+        "COMPRESSOR_01",
+        "HVAC_01",
+        "MOTOR_01",
+        "PUMP_01"
+    ],
+    "evaluation_metrics": {
+        "confusion_matrix": [
+            [
+                5090,
+                53
+            ],
+            [
+                26,
+                79
+            ]
+        ],
+        "tn": 5090,
+        "fp": 53,
+        "fn": 26,
+        "tp": 79,
+        "accuracy": 0.9849,
+        "precision": 0.5985,
+        "recall": 0.7524,
+        "f1_score": 0.6667,
+        "specificity": 0.9897,
+        "false_positive_rate": 0.0103,
+        "false_negative_rate": 0.2476,
+        "total_ground_truth_anomalies": 105,
+        "total_predicted_anomalies": 132,
+        "category_breakdown": {
+            "SENSOR_GLITCH": {
+                "total": 10,
+                "detected": 4,
+                "missed": 6,
+                "detection_rate_pct": 40.0
+            },
+            "IDLE_WASTE": {
+                "total": 21,
+                "detected": 7,
+                "missed": 14,
+                "detection_rate_pct": 33.33
+            },
+            "INEFFICIENT_OPERATION": {
+                "total": 17,
+                "detected": 17,
+                "missed": 0,
+                "detection_rate_pct": 100.0
+            },
+            "COMBINED_HEALTH_ANOMALY": {
+                "total": 17,
+                "detected": 17,
+                "missed": 0,
+                "detection_rate_pct": 100.0
+            },
+            "VIBRATION_ANOMALY": {
+                "total": 15,
+                "detected": 15,
+                "missed": 0,
+                "detection_rate_pct": 100.0
+            },
+            "TEMPERATURE_ANOMALY": {
+                "total": 25,
+                "detected": 19,
+                "missed": 6,
+                "detection_rate_pct": 76.0
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+# SME-EnergyIQ Dependencies
+# Tested on Python 3.12+ / 3.13 for Schneider Electric Yuva Yodha Hackathon 2026
+
+numpy>=2.0.0
+pandas>=2.2.0
+scikit-learn>=1.5.0
+scipy>=1.14.0
+matplotlib>=3.9.0
+plotly>=6.0.0
+PuLP>=2.9.0
+streamlit>=1.40.0
+joblib>=1.4.0
+

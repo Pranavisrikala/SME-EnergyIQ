@@ -1,0 +1,80 @@
+{
+    "metadata": {
+        "emission_factor_used_kg_per_kwh": 0.82,
+        "emission_factor_source": "Central Electricity Authority (CEA) Baseline Database v19 (Govt. of India reference assumption)",
+        "disclaimer": "Simulation benchmark assumption: 0.82 kg CO2e/kWh. This emission factor is used for synthetic benchmarking and demonstration. It is not an independently audited plant-specific electricity emission factor."
+    },
+    "factory_footprint_14_days": {
+        "total_energy_consumed_kwh": 42002.64,
+        "total_co2_emissions_kg": 34442.17,
+        "total_co2_emissions_tonnes": 34.442,
+        "total_yarn_kg": 60338.07,
+        "carbon_intensity_kg_co2_per_kg_yarn": 0.571
+    },
+    "optimization_carbon_impact": {
+        "baseline_emissions_kg_per_day": 2618.84,
+        "optimized_emissions_kg_per_day": 2607.85,
+        "avoided_emissions_daily_kg": 10.99,
+        "annual_potential_avoided_tonnes": 3.3,
+        "baseline_carbon_intensity_kg_per_kg": 0.582,
+        "optimized_carbon_intensity_kg_per_kg": 0.5795,
+        "emission_factor_kg_co2e_per_kwh": 0.82,
+        "disclaimer": "Model-estimated Scope 2 carbon impact from synthetic 24-hour optimization schedule (300 working days/year projection)."
+    },
+    "machine_carbon_breakdown": {
+        "COMPRESSOR_01": {
+            "type": "Air Compressor",
+            "energy_kwh": 10710.58,
+            "co2_emissions_kg": 8782.68,
+            "co2_emissions_tonnes": 8.783,
+            "carbon_share_pct": 25.5
+        },
+        "HVAC_01": {
+            "type": "HVAC System",
+            "energy_kwh": 13562.26,
+            "co2_emissions_kg": 11121.05,
+            "co2_emissions_tonnes": 11.121,
+            "carbon_share_pct": 32.29
+        },
+        "MOTOR_01": {
+            "type": "Spinning Motor",
+            "energy_kwh": 12668.76,
+            "co2_emissions_kg": 10388.38,
+            "co2_emissions_tonnes": 10.388,
+            "carbon_share_pct": 30.16
+        },
+        "PUMP_01": {
+            "type": "Water Pump",
+            "energy_kwh": 5061.04,
+            "co2_emissions_kg": 4150.05,
+            "co2_emissions_tonnes": 4.15,
+            "carbon_share_pct": 12.05
+        }
+    },
+    "equivalencies": {
+        "tree_seedlings_grown_10_years": 1582.1,
+        "passenger_car_km_equivalent": 179386.3
+    },
+    "grid_sensitivity_analysis": {
+        "National_Grid_CEA_Avg": {
+            "factor": 0.82,
+            "total_co2_tonnes": 34.442
+        },
+        "Tamil_Nadu_TANGEDCO": {
+            "factor": 0.79,
+            "total_co2_tonnes": 33.182
+        },
+        "Maharashtra_MSEDCL": {
+            "factor": 0.85,
+            "total_co2_tonnes": 35.702
+        },
+        "Gujarat_UGVCL": {
+            "factor": 0.81,
+            "total_co2_tonnes": 34.022
+        },
+        "Green_PPA_Solar_Blend": {
+            "factor": 0.35,
+            "total_co2_tonnes": 14.701
+        }
+    }
+}
