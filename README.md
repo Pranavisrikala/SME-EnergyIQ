@@ -36,26 +36,37 @@ $$\mathbf{MEASURE} \longrightarrow \mathbf{UNDERSTAND} \longrightarrow \mathbf{D
    - Industrial vibration severity scoring (Zones A, B, C, D) and 0–100 composite health scores.
    - Structured 4-tier alert feed: **Observed Data $\to$ Model Inference $\to$ Engineering Hypothesis $\to$ Recommended Action**.
 5. **PuLP MILP Production Schedule Optimizer (`src/optimization.py`)**:
-   - Shaves peak grid demand by **14.05%** and cuts daily energy costs by **5.27%** (₹1,241 / day = ~₹4.5 Lakhs / year).
-   - **Guarantees 100% exact throughput conservation** (zero production shortfall).
+   - Shaves peak grid demand by **8.08%** (12.51 kW reduction: 154.89 kW $\to$ 142.38 kW) and reduces daily electricity costs by **4.78%** (modeled savings: ₹1,127.79 / day = ₹338,337/year across 300 operating days/year).
+   - **Enforces 100% throughput conservation** (4,500 kg daily finished yarn production maintained without shortfall).
 6. **CEA Carbon & Sustainability Accounting (`src/carbon_analysis.py`)**:
-   - Based on India's Central Electricity Authority (CEA) Baseline Database Version 19 (0.82 kg CO2e/kWh).
-   - Interactive grid emission sensitivity slider and environmental equivalencies.
+   - 0.82 kg CO2e/kWh is used as a synthetic benchmark emission factor for this simulation (referencing India's CEA Baseline Database Version 19 methodology).
+   - Avoids an estimated 10.99 kg CO2e/day (3.30 t CO2e/year across 300 operating days/year) in indirect Scope 2 emissions through peak load shifting and efficiency.
 7. **Industrial Streamlit Dashboard (`dashboard/app.py`)**:
-   - Professional Schneider Electric slate/green theme with interactive Plotly telemetry curves, machine drill-downs, and optimization scorecards.
+   - Industrial dark slate/green theme with interactive Plotly telemetry curves, machine drill-downs, explainable alerts, and optimization scorecards.
 
 ---
 
-## 📊 Verified Platform Benchmark (Baseline vs. Optimized)
+## 📊 Modeled Platform Benchmark (Baseline vs. Optimized)
 
-| Metric | Baseline Schedule | PuLP Optimized Schedule | Verified Improvement |
+> [!NOTE]
+> **Synthetic Telemetry & Modeling Disclosure:** All quantitative AI and optimization results in this repository are based on synthetic multi-machine telemetry and modeled scenarios. They are not measurements from a live factory. 0.82 kg CO2e/kWh is used as a synthetic benchmark emission factor for this simulation.
+
+| Metric | Baseline Schedule | PuLP Optimized Schedule | Modeled Improvement |
 |---|---|---|---|
-| **Daily Electricity Cost** | ₹23,544.01 | ₹22,302.51 | **▼ ₹1,241.50 / day (5.27% Savings)** |
-| **Peak Grid Demand** | 164.59 kW | 141.47 kW | **▼ 23.12 kW (14.05% Shaved)** |
-| **Production Throughput (Yarn)** | 4,500.0 kg | 4,500.0 kg | **100.0% Conserved (Exact Match)** |
-| **Factory SEC (Yarn)** | 0.7019 kWh/kg | 0.7020 kWh/kg | **Maintained Efficiency** |
-| **Annualized Cost Savings** | — | — | **~ ₹3,87,000 / year** |
-| **Hardware Payback Period** | — | — | **< 2.5 Months** |
+| **Daily Electricity Cost** | ₹23,575.50/day | ₹22,447.71/day | **▼ ₹1,127.79/day (4.78% Cost Reduction)** |
+| **Peak Grid Demand** | 154.89 kW | 142.38 kW | **▼ 12.51 kW (8.08% Peak Reduction)** |
+| **Daily Energy Consumption** | 3,193.71 kWh | 3,180.31 kWh | **▼ 13.40 kWh/day (0.42% Energy Savings)** |
+| **Production Throughput (Yarn)** | 4,500 kg | 4,500 kg | **Production conserved: 100% (Exact Match)** |
+| **Factory SEC (Yarn)** | 0.7097 kWh/kg | 0.7067 kWh/kg | **▼ ~0.42% SEC Improvement** |
+| **Daily Scope 2 Carbon** | 2,618.84 kg CO2e/day | 2,607.85 kg CO2e/day | **▼ 10.99 kg CO2e/day Avoided** |
+| **Annualized Modeled Cost Savings** | — | — | **₹338,337/year (based on 300 operating days/year)** |
+| **Annualized Modeled Carbon Avoidance** | — | — | **3.30 t CO2e/year (based on 300 operating days/year)** |
+| **Hardware Payback Period** | — | — | **Hardware Payback Period: To be determined from actual pilot installation cost and verified annual savings.** |
+
+> **Payback Period Formula:**
+> $$\text{Payback Period} = \frac{\text{Installation Cost} + \text{Initial Software Cost}}{\text{Verified Annual Savings}}$$
+> `Payback Period = (Installation Cost + Initial Software Cost) / Verified Annual Savings`
+> *Clearly note: Actual payback requires real factory pilot data and verified installation costs.*
 
 ---
 
@@ -132,7 +143,7 @@ python src/pipeline.py
 streamlit run dashboard/app.py
 ```
 Open your browser at `http://localhost:8501` to interact with the 7 pages:
-1. **🏭 Factory Overview**: Real-time power gauges, factory SEC, active critical alert ticker.
+1. **🏭 Factory Overview**: Industrial power telemetry snapshot, factory SEC, and active alert status ticker.
 2. **⚡ Energy & ToD Monitoring**: Machine power curves and Time-of-Day tariff cost allocation.
 3. **🩺 Machine Health & Diagnostics**: ISO 10816 vibration severity curves and deep machine drill-down.
 4. **🚨 Explainable AI Alerts**: 4-tier transparent alert feed.
@@ -144,8 +155,8 @@ Open your browser at `http://localhost:8501` to interact with the 7 pages:
 
 ## 🎯 Talking Points for Schneider Electric Hackathon Judges
 
-1. **Real-World SME Fit**: Rather than asking an SME to scrap their ₹40 Lakh spinning frame, we retrofit it with a ₹5,500 Schneider EasyLogic meter and a ₹3,800 vibration sensor, delivering payback in **under 2.5 months**.
-2. **Production-First Optimization**: The PuLP optimizer strictly enforces daily production targets ($\sum X_{m,h} = \text{Target}$). Energy savings come from **smart load shifting away from the ₹10/kWh peak tariff**, not by shutting down the factory.
-3. **Explainable AI (XAI)**: We replace black-box alarm fatigue with the **4-Tier Explainability Model** (*Observed Data $\to$ Model Inference $\to$ Engineering Hypothesis $\to$ Recommended Action*), giving electricians actionable instructions.
-4. **Credible Physics & Standards**: All vibration diagnostics adhere strictly to **ISO 10816-3**, and carbon calculations explicitly cite the **Central Electricity Authority (CEA) Baseline Database v19**.
+1. **Real-World SME Fit**: Rather than asking an SME to scrap their ₹40 Lakh spinning frame, the proposed deployment retrofits it with a standard DIN-rail multifunction energy meter and an external vibration sensor, offering a low-barrier retrofit telemetry approach where payback can be determined from pilot installation costs and verified annual savings.
+2. **Production-First Optimization**: The PuLP optimizer strictly enforces daily production targets ($\sum X_{m,h} = \text{Target}$). Modeled energy savings come from **smart load shifting away from the ₹10/kWh peak tariff**, not by shutting down the factory.
+3. **Explainable AI (XAI)**: We replace black-box alarm fatigue with the **4-Tier Explainability Model** (*Observed Data $\to$ Model Inference $\to$ Engineering Hypothesis $\to$ Recommended Action*), supporting early diagnostic investigation for plant technicians.
+4. **Credible Physics & Standards**: All vibration diagnostics adhere strictly to **ISO 10816-3**, and 0.82 kg CO2e/kWh is used as a synthetic benchmark emission factor for this simulation referencing the **Central Electricity Authority (CEA) Baseline Database v19** methodology.
 
