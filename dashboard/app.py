@@ -1,6 +1,6 @@
 """
 SME-EnergyIQ: Industrial Energy Intelligence & Optimization Platform
-Schneider Electric Yuva Yodha Energy Tech Hackathon 2026
+AI-Powered Energy Intelligence & Physics-Based Asset Health Monitoring
 Target Industry: Indian Textile Manufacturing SME (Spinning & Weaving)
 """
 
@@ -34,16 +34,16 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom Industrial CSS (Schneider Green / Slate Palette)
+# Custom Industrial CSS (Industrial Green / Slate Palette)
 st.markdown("""
 <style>
     /* Global Typography & Background */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-    
+
     html, body, [class*="css"] {
         font-family: 'Inter', sans-serif;
     }
-    
+
     /* =========================================================
        SME-EnergyIQ THEME — OVERVIEW PAGE
        ========================================================= */
@@ -196,7 +196,7 @@ st.markdown("""
     }
 
     /* Header Banner */
-    .schneider-header {
+    .sme-page-header {
         background: linear-gradient(135deg, #0B1E28 0%, #17384A 100%);
         border-bottom: 4px solid #18E06F;
         padding: 20px 28px;
@@ -205,7 +205,7 @@ st.markdown("""
         color: white;
         forced-color-adjust: none !important;
     }
-    .schneider-header h1 {
+    .sme-page-header h1 {
         margin: 0;
         font-size: 1.85rem;
         font-weight: 800;
@@ -215,7 +215,7 @@ st.markdown("""
         gap: 12px;
         forced-color-adjust: none !important;
     }
-    .schneider-header p {
+    .sme-page-header p {
         margin: 6px 0 0 0;
         font-size: 0.92rem;
         color: #A8B8C5 !important;
@@ -324,29 +324,29 @@ st.markdown("""
         border-right: 1px solid rgba(245, 158, 11, 0.30);
         border-bottom: 1px solid rgba(245, 158, 11, 0.30);
     }
-    
+
     /* ============================================================ */
     /* INDUSTRIAL SIDEBAR & NAVIGATION CONTROLS (PHASE 8H-2)        */
     /* ============================================================ */
-    
+
     /* Deep Navy Sidebar Container */
     section[data-testid="stSidebar"] {
         background-color: #0B1E28 !important;
         border-right: 1px solid #1E293B !important;
         forced-color-adjust: none !important;
     }
-    
+
     section[data-testid="stSidebar"] * {
         forced-color-adjust: none !important;
     }
-    
+
     /* Sidebar General Typography */
     section[data-testid="stSidebar"] .stMarkdown p,
     section[data-testid="stSidebar"] .stMarkdown li {
         color: #CBD5E1 !important;
         font-size: 0.88rem !important;
     }
-    
+
     /* Sidebar Branding Typography */
     .sidebar-brand-container {
         padding: 4px 0 8px 0;
@@ -370,24 +370,24 @@ st.markdown("""
         line-height: 1.3 !important;
         display: block !important;
     }
-    
+
     section[data-testid="stSidebar"] h1,
     section[data-testid="stSidebar"] h2,
     section[data-testid="stSidebar"] h3,
     section[data-testid="stSidebar"] h4 {
         color: #FFFFFF !important;
     }
-    
+
     section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] p,
     section[data-testid="stSidebar"] .stCaption {
         color: #94A3B8 !important;
     }
-    
+
     section[data-testid="stSidebar"] hr {
         border-color: #1E293B !important;
         margin: 0.85rem 0 !important;
     }
-    
+
     /* Navigation Group Label */
     section[data-testid="stSidebar"] div[data-testid="stRadio"] > label {
         font-size: 0.72rem !important;
@@ -398,13 +398,13 @@ st.markdown("""
         margin-bottom: 8px !important;
         display: block !important;
     }
-    
+
     section[data-testid="stSidebar"] div[data-testid="stRadioGroup"] {
         gap: 6px !important;
         display: flex !important;
         flex-direction: column !important;
     }
-    
+
     /* Base Navigation Tab Item (Inactive) */
     section[data-testid="stSidebar"] [data-testid="stRadioOption"] {
         background-color: rgba(255, 255, 255, 0.04) !important;
@@ -419,7 +419,7 @@ st.markdown("""
         width: 100% !important;
         forced-color-adjust: none !important;
     }
-    
+
     section[data-testid="stSidebar"] [data-testid="stRadioOption"] p,
     section[data-testid="stSidebar"] [data-testid="stRadioOption"] span {
         color: #CBD5E1 !important;
@@ -429,14 +429,14 @@ st.markdown("""
         line-height: 1.4 !important;
         transition: color 0.2s ease-in-out !important;
     }
-    
+
     /* Hide Radio Dot Circle for Clean Tab Appearance */
     section[data-testid="stSidebar"] [data-testid="stRadioOption"] div[class*="eqiohyi4"],
     section[data-testid="stSidebar"] [data-testid="stRadioOption"] div[class*="eqiohyi5"],
     section[data-testid="stSidebar"] [data-testid="stRadioOption"] > div > div > div:first-child:not([data-testid="stMarkdownContainer"]) {
         display: none !important;
     }
-    
+
     /* Hover State (Subtle highlight & movement on interactive tabs) */
     section[data-testid="stSidebar"] [data-testid="stRadioOption"]:not([data-selected="true"]):not(:has(input:checked)):hover {
         background-color: rgba(0, 138, 0, 0.14) !important;
@@ -444,12 +444,12 @@ st.markdown("""
         border-left: 4px solid rgba(0, 138, 0, 0.60) !important;
         transform: translateX(3px) !important;
     }
-    
+
     section[data-testid="stSidebar"] [data-testid="stRadioOption"]:not([data-selected="true"]):not(:has(input:checked)):hover p,
     section[data-testid="stSidebar"] [data-testid="stRadioOption"]:not([data-selected="true"]):not(:has(input:checked)):hover span {
         color: #FFFFFF !important;
     }
-    
+
     /* Active State (Clearly Highlighted Selected Page) */
     section[data-testid="stSidebar"] [data-testid="stRadioOption"][data-selected="true"],
     section[data-testid="stSidebar"] [data-testid="stRadioOption"]:has(input:checked) {
@@ -461,7 +461,7 @@ st.markdown("""
         transform: none !important;
         forced-color-adjust: none !important;
     }
-    
+
     section[data-testid="stSidebar"] [data-testid="stRadioOption"][data-selected="true"] p,
     section[data-testid="stSidebar"] [data-testid="stRadioOption"]:has(input:checked) p,
     section[data-testid="stSidebar"] [data-testid="stRadioOption"][data-selected="true"] span,
@@ -469,7 +469,7 @@ st.markdown("""
         color: #FFFFFF !important;
         font-weight: 700 !important;
     }
-    
+
     /* Sidebar Action Button */
     section[data-testid="stSidebar"] button {
         background-color: #172E3C !important;
@@ -480,7 +480,7 @@ st.markdown("""
         transition: all 0.2s ease !important;
         forced-color-adjust: none !important;
     }
-    
+
     section[data-testid="stSidebar"] button:hover {
         background-color: #008A00 !important;
         color: #FFFFFF !important;
@@ -499,25 +499,25 @@ def load_all_data():
     if not os.path.exists(enriched_path):
         with st.spinner("Initializing SME-EnergyIQ Intelligence Pipeline..."):
             pipeline.run_full_pipeline()
-            
+
     df = pd.read_csv(enriched_path)
     df["Timestamp"] = pd.to_datetime(df["Timestamp"])
-    
+
     with open("results/energy_summary.json", "r") as f:
         energy_summary = json.load(f)
-        
+
     with open("results/optimization_results.json", "r") as f:
         opt_results = json.load(f)
-        
+
     with open("results/carbon_sustainability_report.json", "r") as f:
         carbon_report = json.load(f)
-        
+
     df_alerts = pd.read_csv("results/explainable_alerts.csv")
     df_alerts["Timestamp"] = pd.to_datetime(df_alerts["Timestamp"])
-    
+
     df_sched_base = pd.read_csv("results/schedule_baseline.csv")
     df_sched_opt = pd.read_csv("results/schedule_optimized.csv")
-    
+
     return df, energy_summary, opt_results, carbon_report, df_alerts, df_sched_base, df_sched_opt
 
 # -------------------------------------------------------------
@@ -1169,7 +1169,7 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
     st.markdown("---")
-    
+
     page = st.radio(
         "Navigation",
         [
@@ -1182,7 +1182,7 @@ with st.sidebar:
             "🏛️ Architecture & SME Roadmap"
         ]
     )
-    
+
     st.markdown("---")
     st.markdown("#### **Plant Context: Textile SME**")
     st.markdown("""
@@ -1212,7 +1212,7 @@ if page == "🏭 Factory Overview":
         <div class="overview-page-divider" style="border:none !important; border-top:1px solid #008A00 !important; margin:0 0 20px 0; opacity:0.60; width:100%; forced-color-adjust:none !important;"></div>
     </div>
     """, unsafe_allow_html=True)
-    
+
     # Latest snapshot metrics
     latest_ts = df["Timestamp"].max()
     latest_df = df[df["Timestamp"] == latest_ts]
@@ -1222,15 +1222,15 @@ if page == "🏭 Factory Overview":
     total_cost_rs = energy_summary["factory_overview"]["total_cost_rs"]
     peak_demand = energy_summary["factory_overview"]["peak_demand_kw"]
     idle_waste_rs = energy_summary["factory_overview"]["idle_energy_waste_cost_rs"]
-    
+
     # Distinct Current Active Alerts (Latest Window) vs 14-Day Historical Incidents
     current_active_alerts = latest_df[latest_df["Severity"].isin(["HIGH", "CRITICAL"])]
     current_active_critical = len(latest_df[latest_df["Severity"] == "CRITICAL"])
     current_active_count = len(current_active_alerts)
-    
+
     historical_critical = len(df_alerts[df_alerts["Severity"] == "CRITICAL"])
     historical_high = len(df_alerts[df_alerts["Severity"] == "HIGH"])
-    
+
     # Top KPI Row
     c1, c2, c3, c4 = st.columns(4)
     with c1:
@@ -1279,13 +1279,13 @@ if page == "🏭 Factory Overview":
         vib_zone = m_row.get("ISO_Vib_Zone", "ZONE_A_GOOD")
         status = m_row["Machine_Status"]
         mach_id = m_row["Machine_ID"]
-        
+
         # Machine-specific historical incident counts across the 14-day dataset
         m_crit_hist = len(df_alerts[(df_alerts["Machine_ID"] == mach_id) & (df_alerts["Severity"] == "CRITICAL")])
         m_total_hist = len(df_alerts[df_alerts["Machine_ID"] == mach_id])
-        
+
         badge_class = "badge-good" if h_score >= 85 else ("badge-warning" if h_score >= 65 else "badge-critical")
-        
+
         with col:
             st.markdown(f"""
             <div class="machine-card">
@@ -1302,7 +1302,7 @@ if page == "🏭 Factory Overview":
                     <div>Speed: <b>{m_row['RPM']:.0f} RPM</b></div>
                 </div>
                 <div style="margin-top:10px; font-size:0.74rem; color:#A8B8C5; display:flex; justify-content:space-between; gap:4px;">
-                    <span>ISO: <span style="font-weight:600; color:#18E06F">{vib_zone.replace('_', ' ')}</span></span>
+                    <span>Zone: <span style="font-weight:600; color:#18E06F">{vib_zone.replace('ZONE_', 'Zone ')}</span></span>
                     <span style="color:#A8B8C5; text-align:right;">14-Day: <b>{m_crit_hist} Critical</b> / {m_total_hist} Total</span>
                 </div>
             </div>
@@ -1310,11 +1310,11 @@ if page == "🏭 Factory Overview":
 
     # Real-Time Plant Power Load Chart
     st.markdown("### **Plant-Wide Power Demand & Tariff Bands**")
-    
+
     # 3-day view for high detail
     recent_ts = df["Timestamp"].max() - pd.Timedelta(days=3)
     df_recent = df[df["Timestamp"] >= recent_ts]
-    
+
     fig = go.Figure()
     for m_id in df["Machine_ID"].unique():
         m_data = df_recent[df_recent["Machine_ID"] == m_id]
@@ -1325,7 +1325,7 @@ if page == "🏭 Factory Overview":
             name=f"{m_id} ({m_data['Machine_Type'].iloc[0]})",
             stackgroup="one" # Stacked power demand!
         ))
-        
+
     fig.update_layout(
         title="Aggregate 3-Phase Active Power (kW) by Machine Stack (Last 72 Hours)",
         xaxis_title="Time",
@@ -1407,14 +1407,14 @@ if page == "🏭 Factory Overview":
 # -------------------------------------------------------------
 elif page == "⚡ Energy & ToD Monitoring":
     st.markdown("""
-    <div class="schneider-header">
+    <div class="sme-page-header">
         <h1><span>⚡</span> Machine-Level Energy Monitoring & Time-of-Day Analysis</h1>
         <p>Fundamental Relationship: Energy (kWh) = Power (kW) × Time (h) | ToD Tariff Cost Allocation</p>
     </div>
     """, unsafe_allow_html=True)
-    
+
     tab1, tab2, tab3 = st.tabs(["📊 Multi-Machine Energy Curves", "🕒 Time-of-Day Tariff Impact", "📉 Daily SEC Tracking"])
-    
+
     with tab1:
         c1, c2 = st.columns([3, 1])
         with c2:
@@ -1423,7 +1423,7 @@ elif page == "⚡ Energy & ToD Monitoring":
                 "Date Window",
                 [df["Timestamp"].min().date(), df["Timestamp"].max().date()]
             )
-            
+
         # Date range safety guard
         if len(date_range) == 2:
             start_date, end_date = date_range[0], date_range[1]
@@ -1435,7 +1435,7 @@ elif page == "⚡ Energy & ToD Monitoring":
         with c1:
             mask = (df["Timestamp"].dt.date >= start_date) & (df["Timestamp"].dt.date <= end_date)
             df_filtered = df[mask]
-            
+
             if sel_machine != "ALL MACHINES":
                 df_filtered = df_filtered[df_filtered["Machine_ID"] == sel_machine]
                 fig = px.line(
@@ -1456,7 +1456,7 @@ elif page == "⚡ Energy & ToD Monitoring":
                 )
             fig.update_layout(template="plotly_white", height=420)
             st.plotly_chart(fig, use_container_width=True)
-            
+
         # Machine Energy Consumption Table
         st.markdown("#### **Fleet Energy & Cost Breakdown**")
         breakdown_rows = []
@@ -1590,7 +1590,7 @@ elif page == "⚡ Energy & ToD Monitoring":
             )
             fig_t.update_layout(template="plotly_white")
             st.plotly_chart(fig_t, use_container_width=True)
-            
+
         with c2:
             st.markdown("#### **Electricity Bill Impact (Rupees)**")
             fig_c = px.bar(
@@ -1603,10 +1603,10 @@ elif page == "⚡ Energy & ToD Monitoring":
             )
             fig_c.update_layout(template="plotly_white")
             st.plotly_chart(fig_c, use_container_width=True)
-            
+
         st.info("""
-        💡 **Key Industrial Takeaway for Judges**: Notice that while **PEAK hours** account for only ~14.8% of energy consumed, 
-        they generate over **20.7% of the total electricity bill** due to the ₹10.00/kWh tariff. Shifting flexible batch loads 
+        💡 **Key Industrial Takeaway for Judges**: Notice that while **PEAK hours** account for only ~14.8% of energy consumed,
+        they generate over **20.7% of the total electricity bill** due to the ₹10.00/kWh tariff. Shifting flexible batch loads
         (such as Dyeing Pumps and Air Storage charging) into the ₹5.50/kWh OFF-PEAK night slab unlocks substantial savings.
         """)
 
@@ -1637,22 +1637,22 @@ elif page == "⚡ Energy & ToD Monitoring":
 # -------------------------------------------------------------
 elif page == "🩺 Machine Health & Diagnostics":
     st.markdown("""
-    <div class="schneider-header">
-        <h1><span>🩺</span> ISO 10816 Machine Health & Condition Monitoring</h1>
-        <p>Vibration Severity Standards, Thermal Headroom & Physics-Based Asset Health Scoring</p>
+    <div class="sme-page-header">
+        <h1><span>🩺</span> Machine Health & Vibration Monitoring</h1>
+        <p>Vibration Severity References, Thermal Headroom & Physics-Based Asset Health Scoring</p>
     </div>
     """, unsafe_allow_html=True)
-    
+
     # Machine Selection
     selected_machine = st.selectbox("Select Machine for Detailed Engineering Drill-Down", df["Machine_ID"].unique())
     m_df = df[df["Machine_ID"] == selected_machine]
     latest_m = m_df.iloc[-1]
-    
+
     c1, c2, c3, c4 = st.columns(4)
     with c1:
         st.metric("Health Score", f"{latest_m['Health_Score']}/100", delta=f"Risk: {latest_m['Risk_Level']}")
     with c2:
-        st.metric("Vibration RMS", f"{latest_m['Vibration_mm_s']:.2f} mm/s", delta=f"ISO: {latest_m.get('ISO_Vib_Zone', 'N/A')}")
+        st.metric("Vibration RMS", f"{latest_m['Vibration_mm_s']:.2f} mm/s", delta=f"Zone: {latest_m.get('ISO_Vib_Zone', 'N/A').replace('ZONE_', 'Zone ')}")
     with c3:
         st.metric("Stator Temperature", f"{latest_m['Temperature_C']:.1f}°C", delta=f"Elevation: {latest_m.get('Temp_Elevation', 0.0):+.1f}°C")
     with c4:
@@ -1660,30 +1660,30 @@ elif page == "🩺 Machine Health & Diagnostics":
 
     # Historical Parameter Curves
     st.markdown(f"### **14-Day Condition Telemetry: {selected_machine}**")
-    
+
     fig_diag = make_subplots(rows=2, cols=2, subplot_titles=(
         "Active Power (kW) vs. Load Baseline",
-        "ISO 10816 Vibration Severity (mm/s RMS)",
+        "Vibration Severity Reference (mm/s RMS)",
         "Stator/Bearing Temperature (°C)",
         "Motor Slip / Operating Speed (RPM)"
     ))
-    
+
     # Power
     fig_diag.add_trace(go.Scatter(x=m_df["Timestamp"], y=m_df["Power_kW"], name="Power (kW)", line=dict(color="#2563EB")), row=1, col=1)
-    # Vibration with ISO threshold lines
+    # Vibration with configured threshold lines
     fig_diag.add_trace(go.Scatter(x=m_df["Timestamp"], y=m_df["Vibration_mm_s"], name="Vibration (mm/s)", line=dict(color="#D97706")), row=1, col=2)
-    fig_diag.add_hline(y=2.3, line_dash="dot", line_color="#10B981", annotation_text="ISO Good (2.3)", row=1, col=2)
-    fig_diag.add_hline(y=4.5, line_dash="dash", line_color="#F59E0B", annotation_text="ISO Unsatisfactory (4.5)", row=1, col=2)
-    fig_diag.add_hline(y=7.1, line_dash="dash", line_color="#EF4444", annotation_text="ISO Unacceptable (7.1)", row=1, col=2)
-    
+    fig_diag.add_hline(y=2.3, line_dash="dot", line_color="#10B981", annotation_text="Nominal / Good (2.3)", row=1, col=2)
+    fig_diag.add_hline(y=4.5, line_dash="dash", line_color="#F59E0B", annotation_text="Unsatisfactory (4.5)", row=1, col=2)
+    fig_diag.add_hline(y=7.1, line_dash="dash", line_color="#EF4444", annotation_text="Critical / Unacceptable (7.1)", row=1, col=2)
+
     # Temperature
     fig_diag.add_trace(go.Scatter(x=m_df["Timestamp"], y=m_df["Temperature_C"], name="Temp (°C)", line=dict(color="#DC2626")), row=2, col=1)
     # RPM
     fig_diag.add_trace(go.Scatter(x=m_df["Timestamp"], y=m_df["RPM"], name="Speed (RPM)", line=dict(color="#059669")), row=2, col=2)
-    
+
     fig_diag.update_layout(height=600, template="plotly_white", showlegend=False)
     st.plotly_chart(fig_diag, use_container_width=True)
-    
+
     # Machine Specific Diagnostic Summary
     flagged_records = m_df[m_df["Severity"].isin(["HIGH", "CRITICAL"])]
     st.markdown("#### **Diagnostic Investigation Log: Why Was This Machine Flagged?**")
@@ -1697,7 +1697,7 @@ elif page == "🩺 Machine Health & Diagnostics":
         - **Observed Physical Evidence**: Power reached `{sample_ev['Power_kW']:.1f} kW`, Temperature reached `{sample_ev['Temperature_C']:.1f}°C`, Vibration peaked at `{sample_ev['Vibration_mm_s']:.2f} mm/s`.
         """)
     else:
-        st.success(f"✅ Machine {selected_machine} operated within nominal ISO 10816 Class II vibration and thermal thresholds.")
+        st.success(f"✅ Machine {selected_machine} operated within nominal vibration and thermal thresholds.")
 
     # ---------------------------------------------------------
     # Maintenance Intelligence Panel
@@ -1724,7 +1724,7 @@ elif page == "🩺 Machine Health & Diagnostics":
             sugg_inv = "Inspect condenser coils for particulate clogging, verify fan blower belt, and check fresh air damper."
             poss_causes = "Possible condenser fin fouling, restricted blower airflow, or high ambient thermal load."
         elif selected_machine == "MOTOR_01":
-            abnormal_sig = f"ISO vibration elevation ({latest_m['Vibration_mm_s']:.2f} mm/s RMS) exceeding configured threshold."
+            abnormal_sig = f"Vibration elevation ({latest_m['Vibration_mm_s']:.2f} mm/s RMS) exceeding configured threshold."
             sugg_inv = "Inspect foundation anchor fastenings, check V-belt tension, and perform bearing lubrication check."
             poss_causes = "Possible mechanical unbalance, mounting looseness, or dynamic drive-system wear."
         elif selected_machine == "PUMP_01":
@@ -1802,19 +1802,19 @@ elif page == "🩺 Machine Health & Diagnostics":
 # -------------------------------------------------------------
 elif page == "🚨 Explainable AI Alerts":
     st.markdown("""
-    <div class="schneider-header">
+    <div class="sme-page-header">
         <h1><span>🚨</span> 4-Tier Explainable Industrial AI Alert Feed</h1>
         <p>No Black Boxes: Observed Data → Model Inference → Engineering Hypothesis → Recommended Action</p>
     </div>
     """, unsafe_allow_html=True)
-    
+
     # Dynamic operational status (Current Active Window vs 14-Day Historical Log)
     latest_ts = df["Timestamp"].max()
     latest_df = df[df["Timestamp"] == latest_ts]
     current_active_alerts = latest_df[latest_df["Severity"].isin(["HIGH", "CRITICAL"])]
     current_active_count = len(current_active_alerts)
     historical_count = len(df_alerts)
-    
+
     st.markdown("### **Operational Status Overview**")
     col_stat1, col_stat2 = st.columns(2)
     with col_stat1:
@@ -1833,7 +1833,7 @@ elif page == "🚨 Explainable AI Alerts":
             <div class="kpi-sub" style="color:#059669">All Cleared / Historical</div>
         </div>
         """, unsafe_allow_html=True)
-    
+
     st.markdown("### **Historical Diagnostic Incident Log (14-Day Archive)**")
     c1, c2, c3 = st.columns([2, 1, 1])
     with c1:
@@ -1842,15 +1842,15 @@ elif page == "🚨 Explainable AI Alerts":
         filter_sev = st.selectbox("Filter by Severity", ["ALL", "CRITICAL", "HIGH", "MEDIUM"])
     with c3:
         filter_m = st.selectbox("Filter by Machine", ["ALL"] + list(df["Machine_ID"].unique()))
-        
+
     filtered_alerts = df_alerts.copy()
     if filter_sev != "ALL":
         filtered_alerts = filtered_alerts[filtered_alerts["Severity"] == filter_sev]
     if filter_m != "ALL":
         filtered_alerts = filtered_alerts[filtered_alerts["Machine_ID"] == filter_m]
-        
+
     st.markdown(f"Showing **{len(filtered_alerts)}** triaged industrial alert events:")
-    
+
     # Render first 15 alerts as clear expandable cards
     for idx, alert in filtered_alerts.head(15).iterrows():
         # Tier 1: OBSERVED DATA
@@ -1859,7 +1859,9 @@ elif page == "🚨 Explainable AI Alerts":
         raw_obs = raw_obs.replace("ISO: ZONE_C_UNSATISFACTORY", "Configured vibration zone: C / Unsatisfactory")
         raw_obs = raw_obs.replace("ISO: ZONE_B_SATISFACTORY", "Configured vibration zone: B / Satisfactory")
         raw_obs = raw_obs.replace("ISO: ZONE_A_GOOD", "Configured vibration zone: A / Good")
-        
+        raw_obs = raw_obs.replace("ISO: ", "Zone: ")
+        raw_obs = raw_obs.replace("ISO ", "Zone ")
+
         obs_items = []
         for item in raw_obs.split(";"):
             item = item.strip()
@@ -1872,7 +1874,7 @@ elif page == "🚨 Explainable AI Alerts":
             elif item.startswith("Prod:"):
                 item = "Production:" + item[5:]
             obs_items.append(item)
-            
+
         # Tier 2: MODEL INFERENCE
         raw_inf = str(alert["Model_Inference"])
         if "Anomaly Score:" in raw_inf:
@@ -1881,12 +1883,12 @@ elif page == "🚨 Explainable AI Alerts":
                 score_val = f"{score_val}/100"
         else:
             score_val = "N/A"
-            
+
         if "Status:" in raw_inf:
             raw_status = raw_inf.split("Status:")[1].split("|")[0].strip()
         else:
             raw_status = "RUNNING"
-            
+
         if "RUNNING" in raw_status:
             op_state = "RUNNING"
         elif "IDLE" in raw_status:
@@ -1895,9 +1897,9 @@ elif page == "🚨 Explainable AI Alerts":
             op_state = "MAINTENANCE"
         else:
             op_state = raw_status
-            
+
         sev_val = str(alert["Severity"])
-        
+
         # Tier 3: ENGINEERING HYPOTHESIS
         raw_hyp = str(alert["Engineering_Hypothesis"])
         if "Vibration exceeds ISO" in raw_hyp or "Likely V-belt" in raw_hyp:
@@ -1934,6 +1936,8 @@ elif page == "🚨 Explainable AI Alerts":
             clean_hyp = raw_hyp.replace("Likely ", "Possible causes to investigate: ")
             clean_hyp = clean_hyp.replace("ISO 10816 Class II threshold", "configured critical threshold")
             clean_hyp = clean_hyp.replace("ISO 10816", "configured vibration")
+            clean_hyp = clean_hyp.replace("Vibration exceeds ISO", "Vibration exceeds configured threshold")
+            clean_hyp = clean_hyp.replace("ISO", "configured")
             hyp_text = clean_hyp
 
         # Tier 4: RECOMMENDED ACTION
@@ -1955,15 +1959,15 @@ elif page == "🚨 Explainable AI Alerts":
             st.markdown("**1. OBSERVED DATA (Sensor Evidence)**")
             for item in obs_items:
                 st.markdown(f"- {item}")
-                
+
             st.markdown("**2. MODEL INFERENCE (AI Isolation Forest)**")
             st.markdown(f"- Isolation Forest Anomaly Score: {score_val}")
             st.markdown(f"- Diagnostic Severity: {sev_val}")
             st.markdown(f"- Operating State: {op_state}")
-            
+
             st.markdown("**3. ENGINEERING HYPOTHESIS**")
             st.markdown(hyp_text)
-            
+
             st.markdown("**4. RECOMMENDED ACTION (Maintenance Instruction)**")
             for act in act_items:
                 st.markdown(f"- {act}.")
@@ -2002,14 +2006,14 @@ elif page == "🚨 Explainable AI Alerts":
 # -------------------------------------------------------------
 elif page == "📈 Production Optimization":
     st.markdown("""
-    <div class="schneider-header">
+    <div class="sme-page-header">
         <h1><span>📈</span> PuLP MILP Production Schedule & Peak Load Shifting</h1>
-        <p>100% Throughput Guarantee | Minimize Time-of-Day Tariff Cost + Shave Peak Grid Demand</p>
+        <p>100% Target Throughput Preservation | Minimize Time-of-Day Tariff Cost + Shave Peak Grid Demand</p>
     </div>
     """, unsafe_allow_html=True)
-    
+
     m = opt_results["metrics"]
-    
+
     # Comparison Cards
     c1, c2, c3, c4, c5 = st.columns(5)
     with c1:
@@ -2062,10 +2066,10 @@ elif page == "📈 Production Optimization":
 
     # 24-Hour Load Profile: Baseline vs Optimized
     st.markdown("### **24-Hour Load Shifting: Baseline vs. PuLP Optimized Schedule**")
-    
+
     base_hourly = df_sched_base.groupby("Hour")["Power_kW"].sum().reset_index()
     opt_hourly = df_sched_opt.groupby("Hour")["Power_kW"].sum().reset_index()
-    
+
     fig_opt = go.Figure()
     fig_opt.add_trace(go.Scatter(
         x=base_hourly["Hour"],
@@ -2081,7 +2085,7 @@ elif page == "📈 Production Optimization":
         name="PuLP Optimized Schedule (Off-Peak Shifted)",
         line=dict(color="#008A00", width=3)
     ))
-    
+
     # Highlight Peak Tariff Zone (18:00 - 22:00)
     fig_opt.add_vrect(
         x0=18, x1=22,
@@ -2090,7 +2094,7 @@ elif page == "📈 Production Optimization":
         annotation_text="PEAK TARIFF WINDOW (₹10.00 / kWh)",
         annotation_position="top left"
     )
-    
+
     fig_opt.update_layout(
         title="Grid Active Power Demand (kW) Across 24-Hour Day",
         xaxis_title="Hour of Day (00:00 to 23:00)",
@@ -2100,7 +2104,7 @@ elif page == "📈 Production Optimization":
         hovermode="x unified"
     )
     st.plotly_chart(fig_opt, use_container_width=True)
-    
+
     # Detailed Benchmark Table
     st.markdown("#### **Baseline vs. Optimized Comprehensive Scorecard**")
     scorecard_data = [
@@ -2138,22 +2142,22 @@ elif page == "📈 Production Optimization":
 # -------------------------------------------------------------
 elif page == "🌱 Carbon & Sustainability":
     st.markdown("""
-    <div class="schneider-header">
+    <div class="sme-page-header">
         <h1><span>🌱</span> Industrial Carbon Accounting & Sustainability</h1>
-        <p>Central Electricity Authority (CEA) Emission Factors | Scope 2 Indirect Carbon Footprint</p>
+        <p>Electricity-Related Emissions Reporting | Configurable Grid Factor (0.82 kg CO₂/kWh)</p>
     </div>
     """, unsafe_allow_html=True)
-    
+
     meta = carbon_report.get("metadata", {})
     footprint = carbon_report.get("factory_footprint_14_days", {})
     opt_impact = carbon_report.get("optimization_carbon_impact", {})
-    
+
     # -------------------------------------------------------------
     # SECTION A: HISTORICAL FACTORY FOOTPRINT — 14 DAYS
     # -------------------------------------------------------------
     st.markdown("### **Section A: Historical Factory Footprint — 14 Days (Telemetry Data)**")
     st.caption("Aggregated from 14 days of multi-channel edge energy meter data across 4 core textile assets.")
-    
+
     # Interactive Grid Factor Slider
     c_slider, c_info = st.columns([2, 2])
     with c_slider:
@@ -2168,13 +2172,13 @@ elif page == "🌱 Carbon & Sustainability":
     with c_info:
         st.markdown(f"""
         - **Grid Emission Factor**: 0.82 kg CO2e/kWh used as a synthetic benchmark for this simulation.
-        - **Scope 2 Boundary**: Covers purchased grid electricity only (CEA Baseline Database reference).
+        - **Scope 2 Boundary**: Covers purchased grid electricity using configurable grid emission factor (0.82 kg CO2e/kWh benchmark).
         - *Benchmark Disclaimer*: {meta.get('disclaimer', 'Grid emission factor: 0.82 kg CO2e/kWh used as a synthetic benchmark for this simulation.')}
         """)
-        
+
     total_factory_kwh = footprint.get("total_energy_consumed_kwh", 42002.64)
     total_yarn_kg = footprint.get("total_yarn_kg", 60338.07)
-    
+
     recalc_co2_kg = total_factory_kwh * custom_factor
     recalc_co2_t = recalc_co2_kg / 1000.0
     if total_yarn_kg > 0:
@@ -2187,7 +2191,7 @@ elif page == "🌱 Carbon & Sustainability":
         ci_sub_disp = "N/A — no production recorded"
     tree_equiv = recalc_co2_kg / TREE_CO2_ABSORPTION_KG_PER_YEAR
     car_equiv = recalc_co2_kg / CAR_CO2_KG_PER_KM
-    
+
     c1, c2, c3, c4 = st.columns(4)
     with c1:
         st.markdown(f"""
@@ -2241,32 +2245,32 @@ elif page == "🌱 Carbon & Sustainability":
     st.markdown("---")
     st.markdown("### **Section B: Optimization Scenario — 24 Hours (PuLP MILP Impact)**")
     st.caption("Carbon co-benefits derived from 24-hour mathematical scheduling optimization with 100% throughput conservation.")
-    
+
     # Read optimization metrics
     opt_m = opt_results.get("metrics", {})
     base_kwh_24h = opt_m.get("Total_Energy_kWh", {}).get("baseline", 3193.71)
     opt_kwh_24h = opt_m.get("Total_Energy_kWh", {}).get("optimized", 3180.31)
     kwh_saved_24h = round(base_kwh_24h - opt_kwh_24h, 2)
-    
+
     opt_base_co2 = opt_m.get("CO2_Emissions_kg", {}).get("baseline", round(base_kwh_24h * custom_factor, 2))
     opt_opt_co2 = opt_m.get("CO2_Emissions_kg", {}).get("optimized", round(opt_kwh_24h * custom_factor, 2))
     opt_avoided_co2 = opt_m.get("CO2_Emissions_kg", {}).get("avoided_kg", round(kwh_saved_24h * custom_factor, 2))
-    
+
     base_ci_24h = opt_m.get("Carbon_Intensity_kg_CO2e_per_kg_yarn", {}).get("baseline")
     opt_ci_24h = opt_m.get("Carbon_Intensity_kg_CO2e_per_kg_yarn", {}).get("optimized")
     ci_imp_pct = opt_m.get("Carbon_Intensity_kg_CO2e_per_kg_yarn", {}).get("improvement_pct", 0.0)
-    
+
     if opt_ci_24h is not None and base_ci_24h is not None:
         opt_ci_disp = f"{opt_ci_24h:.4f} <span style=\"font-size:1rem;color:#64748B\">kg/kg</span>"
         opt_ci_sub = f"▼ {ci_imp_pct:.2f}% (Base: {base_ci_24h:.4f})"
     else:
         opt_ci_disp = "<span style=\"font-size:1.1rem;color:#EF4444\">N/A</span>"
         opt_ci_sub = "N/A — no production recorded"
-    
+
     annual_avoided_t = opt_impact.get("annual_potential_avoided_tonnes", round(opt_avoided_co2 * 300.0 / 1000.0, 2))
     cost_savings_daily = opt_m.get("Total_Cost_Rs", {}).get("savings", 1127.79)
     annual_cost_savings = round(cost_savings_daily * 300.0, 2)
-    
+
     ob1, ob2, ob3, ob4 = st.columns(4)
     with ob1:
         st.markdown(f"""
@@ -2300,10 +2304,10 @@ elif page == "🌱 Carbon & Sustainability":
             <div class="kpi-sub">300 operating days projection</div>
         </div>
         """, unsafe_allow_html=True)
-        
+
     st.markdown("#### **Dual Co-Benefit: Electricity Cost Savings & Decarbonization**")
     st.info(f"💡 **Synergy Analysis**: The PuLP MILP optimization achieves **₹{cost_savings_daily:,.0f}/day** in electricity cost savings (~₹{annual_cost_savings:,.0f}/year) primarily through ToD peak load shifting, while abating **{opt_avoided_co2:.2f} kg CO2e/day** (~{annual_avoided_t:.2f} tonnes CO2e/year) through eliminating idle energy waste while conserving **100% of finished yarn throughput** (4,500 kg/day).")
-    
+
     st.caption("🛡️ **GHG Protocol Scope Boundary**: *Modeled electricity-related Scope 2 emissions only. Does not include Scope 1 (direct combustion / diesel generators), refrigerants, or Scope 3 (supply chain).*")
 
 # -------------------------------------------------------------
@@ -2311,25 +2315,25 @@ elif page == "🌱 Carbon & Sustainability":
 # -------------------------------------------------------------
 elif page == "🏛️ Architecture & SME Roadmap":
     st.markdown("""
-    <div class="schneider-header">
+    <div class="sme-page-header">
         <h1><span>🏛️</span> System Architecture & Low-Cost SME Adoption Plan</h1>
         <p>End-to-End Edge-to-Cloud Pipeline Designed for Indian Textile Manufacturers</p>
     </div>
     """, unsafe_allow_html=True)
-    
+
     st.markdown("### **High-Level System Pipeline**")
     st.markdown("""
     ```
     FACTORY MACHINES (Spinning, Compressors, Pumps, HVAC)
             ↓  [RS-485 Modbus RTU / Multi-channel CT Clamps / Vib Transducers]
-    MACHINE SENSORS & SMART METERS (Schneider EM6400NG / EasyLogic)
+    MACHINE SENSORS & SMART METERS (Industrial 3-Phase Energy Meters)
             ↓  [MQTT / JSON over WiFi / Ethernet]
     EDGE GATEWAY (Raspberry Pi 4 / Industrial Edge IPC)
             ↓  [HTTPS REST API / WebSocket Ingestion]
     DATA VALIDATION & INGESTION (src/data_processing.py & src/utils.py)
             ↓  [Processed Parquet / Time-Series Database]
     AI ANOMALY DETECTION (Isolation Forest + Severity Engine)
-            ↓  [ISO 10816 Health & 4-Tier Rationale]
+            ↓  [Vibration Health & 4-Tier Rationale]
     EXPLAINABLE ALERT & DIAGNOSTIC ENGINE (src/machine_health.py)
             ↓  [Time-of-Day Tariff Tariffs & Load Constraints]
     PRODUCTION OPTIMIZER (PuLP Mixed-Integer Linear Programming)
@@ -2339,26 +2343,33 @@ elif page == "🏛️ Architecture & SME Roadmap":
     FACTORY MANAGER / PLANT ENGINEER
     ```
     """)
-    
+
     st.markdown("---")
     c1, c2 = st.columns(2)
-    
+
     with c1:
         st.markdown("### **Low-Cost Retrofit BOM for Indian SMEs**")
         st.markdown("""
         Textile SMEs operate on thin margins (3-8%). SME-EnergyIQ avoids expensive machine replacements:
-        
-        | Component | Typical Specification | Est. Unit Cost |
+
+        | Component | Typical Specification | Est. Reference Cost |
         |---|---|---|
-        | **Smart Energy Meter** | Schneider EasyLogic PM2120 / Conzerv | ₹4,500 – ₹7,000 |
-        | **Split-Core CT Clamps** | 100A/5A Non-invasive retrofits | ₹1,200 / 3-phase set |
-        | **IEPE Vib Sensor** | 4-20mA loop-powered accelerometer | ₹3,500 |
-        | **Edge Gateway** | Quad-core ARM Industrial Gateway / Pi | ₹6,500 |
-        | **Total Machine Retrofit** | Plug-and-play non-invasive install | **< ₹18,000 / machine** |
-        
-        *Payback period through 5–10% peak tariff shifting is under 4 months.*
+        | **Industrial 3-Phase Energy Meter** | Multi-function Modbus RTU meter | ₹4,500 – ₹7,000 |
+        | **Non-Invasive CT Clamps** | Split-core current transducers | ₹1,200 / 3-phase set |
+        | **Industrial Vibration Sensor** | Loop-powered accelerometer | ₹3,500 |
+        | **Temperature Sensor** | Surface thermocouple / RTD sensor | ₹1,500 |
+        | **Edge Gateway** | Industrial Edge Gateway / Embedded IPC | ₹6,500 |
+        | **Software Platform** | SME-EnergyIQ Intelligence Platform | Cloud / Local Edge |
+
+        *Indicative prototype reference — actual pilot cost depends on equipment, installation and vendor quotations.*
+
+        **Payback Evaluation:**
+        Payback is evaluated during pilot deployment using verified savings and actual installation cost.
+
+        *Payback Formula:*
+        *(Installation Cost + Initial Software Cost) / Verified Annual Savings*
         """)
-        
+
     with c2:
         st.markdown("### **5-Stage Phased Adoption Roadmap**")
         st.markdown("""
@@ -2368,13 +2379,13 @@ elif page == "🏛️ Architecture & SME Roadmap":
         2. **Phase 2: Baseline SEC & Anomaly Detection (Month 2)**
            - Deploy Isolation Forest model to flag abnormal power draw.
            - Establish machine baseline Specific Energy Consumption.
-        3. **Phase 3: Machine Health & ISO 10816 Condition Monitoring (Month 3)**
+        3. **Phase 3: Machine Health & Vibration Monitoring (Month 3)**
            - Add vibration and surface temperature monitoring.
            - Activate 4-tier explainable alert feed.
         4. **Phase 4: PuLP Production Optimization (Month 4-6)**
            - Automate shift load-shifting from peak ₹10/kWh to off-peak ₹5.5/kWh.
            - Shave contract demand penalties.
         5. **Phase 5: ESG & Carbon Accounting (Ongoing)**
-           - Automated Scope 2 emissions reporting with CEA grid factors.
+           - Automated electricity-related carbon reporting using a configurable emissions factor.
         """)
 
