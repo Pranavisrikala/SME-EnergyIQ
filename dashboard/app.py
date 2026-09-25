@@ -13,6 +13,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import streamlit as st
+import time
+import textwrap
 
 # Add src to system path for direct module access
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
@@ -518,14 +520,638 @@ def load_all_data():
     
     return df, energy_summary, opt_results, carbon_report, df_alerts, df_sched_base, df_sched_opt
 
-try:
-    df, energy_summary, opt_results, carbon_report, df_alerts, df_sched_base, df_sched_opt = load_all_data()
-except Exception as e:
-    st.error(f"Error loading platform data: {e}")
-    if st.button("Regenerate Data Pipeline"):
-        pipeline.run_full_pipeline()
-        st.rerun()
-    st.stop()
+# -------------------------------------------------------------
+# SMART MANUFACTURING INITIAL LOADING INTERFACE (PHASE 8H-5)
+# -------------------------------------------------------------
+def get_smart_manufacturing_loading_html():
+    raw_html = """
+    <div id="sme-loading-screen" class="sme-loading-overlay">
+        <div class="sme-loading-container">
+            <!-- Header Branding -->
+            <div class="sme-loading-header">
+                <div class="sme-loading-logo">
+                    <span class="sme-lightning-icon">⚡</span>
+                    <span class="sme-logo-text">SME-<span class="sme-logo-accent">EnergyIQ</span></span>
+                </div>
+                <div class="sme-loading-subtitle">Industrial Energy Intelligence Platform</div>
+                <div class="sme-loading-badge">SMART MANUFACTURING TELEMETRY ENGINE</div>
+            </div>
+
+            <!-- Conceptual Hierarchy Flow -->
+            <div class="sme-flow-hierarchy">
+                <span class="sme-hier-step">SMART FACTORY</span>
+                <span class="sme-hier-arrow">›</span>
+                <span class="sme-hier-step">MACHINE TELEMETRY</span>
+                <span class="sme-hier-arrow">›</span>
+                <span class="sme-hier-step">ENERGY INTELLIGENCE</span>
+                <span class="sme-hier-arrow">›</span>
+                <span class="sme-hier-step">AI ANALYSIS</span>
+                <span class="sme-hier-arrow">›</span>
+                <span class="sme-hier-step sme-hier-active">SME-ENERGYIQ</span>
+            </div>
+
+            <!-- 4 Core Industrial Assets -->
+            <div class="sme-assets-grid">
+                <!-- Asset 1: Spinning Motor -->
+                <div class="sme-asset-card" style="animation-delay: 0.15s;">
+                    <div class="sme-asset-status-dot"></div>
+                    <div class="sme-asset-icon-box">
+                        <svg class="sme-asset-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Motor Cylinder & Frame -->
+                            <rect x="14" y="16" width="36" height="32" rx="4" fill="#0E2A38" stroke="#18E06F" stroke-width="2"/>
+                            <!-- Cooling Ribs -->
+                            <line x1="20" y1="16" x2="20" y2="48" stroke="#18E06F" stroke-width="1.5" stroke-dasharray="2 2"/>
+                            <line x1="26" y1="16" x2="26" y2="48" stroke="#18E06F" stroke-width="1.5" stroke-dasharray="2 2"/>
+                            <line x1="32" y1="16" x2="32" y2="48" stroke="#18E06F" stroke-width="1.5" stroke-dasharray="2 2"/>
+                            <line x1="38" y1="16" x2="38" y2="48" stroke="#18E06F" stroke-width="1.5" stroke-dasharray="2 2"/>
+                            <line x1="44" y1="16" x2="44" y2="48" stroke="#18E06F" stroke-width="1.5" stroke-dasharray="2 2"/>
+                            <!-- Shaft & Rotor -->
+                            <rect x="50" y="27" width="10" height="10" rx="1" fill="#38BDF8"/>
+                            <rect x="4" y="26" width="10" height="12" rx="2" fill="#17384A" stroke="#38BDF8" stroke-width="1.5"/>
+                            <!-- Mounting Base -->
+                            <path d="M10 48L8 54H56L54 48H10Z" fill="#17384A" stroke="#18E06F" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <div class="sme-asset-title">Spinning Motor</div>
+                    <div class="sme-asset-id">MOTOR_01</div>
+                    <div class="sme-asset-tag">Ring Frame (75 kW)</div>
+                </div>
+
+                <!-- Asset 2: Air Compressor -->
+                <div class="sme-asset-card" style="animation-delay: 0.3s;">
+                    <div class="sme-asset-status-dot"></div>
+                    <div class="sme-asset-icon-box">
+                        <svg class="sme-asset-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Compressor Pressure Vessel -->
+                            <rect x="10" y="24" width="44" height="24" rx="12" fill="#0E2A38" stroke="#38BDF8" stroke-width="2"/>
+                            <!-- Compressor Head & Piston Block -->
+                            <rect x="18" y="10" width="16" height="14" rx="2" fill="#17384A" stroke="#38BDF8" stroke-width="1.5"/>
+                            <!-- Gauge -->
+                            <circle cx="44" cy="17" r="7" fill="#0B1E28" stroke="#18E06F" stroke-width="1.5"/>
+                            <line x1="44" y1="17" x2="47" y2="14" stroke="#18E06F" stroke-width="1.5"/>
+                            <!-- Piping -->
+                            <path d="M34 17H37V24" stroke="#38BDF8" stroke-width="2"/>
+                            <!-- Stand Legs -->
+                            <rect x="16" y="48" width="6" height="6" fill="#17384A"/>
+                            <rect x="42" y="48" width="6" height="6" fill="#17384A"/>
+                        </svg>
+                    </div>
+                    <div class="sme-asset-title">Air Compressor</div>
+                    <div class="sme-asset-id">COMPRESSOR_01</div>
+                    <div class="sme-asset-tag">Pneumatics (45 kW)</div>
+                </div>
+
+                <!-- Asset 3: Dyeing / Water Pump -->
+                <div class="sme-asset-card" style="animation-delay: 0.45s;">
+                    <div class="sme-asset-status-dot"></div>
+                    <div class="sme-asset-icon-box">
+                        <svg class="sme-asset-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Volute Casing -->
+                            <circle cx="30" cy="34" r="16" fill="#0E2A38" stroke="#38BDF8" stroke-width="2"/>
+                            <!-- Impeller Core -->
+                            <circle cx="30" cy="34" r="6" fill="#17384A" stroke="#18E06F" stroke-width="1.5"/>
+                            <path d="M30 28V40M24 34H36" stroke="#18E06F" stroke-width="1.5"/>
+                            <!-- Discharge Flange -->
+                            <rect x="25" y="10" width="10" height="8" rx="1" fill="#17384A" stroke="#38BDF8" stroke-width="1.5"/>
+                            <line x1="23" y1="10" x2="37" y2="10" stroke="#38BDF8" stroke-width="2"/>
+                            <!-- Suction Flange -->
+                            <rect x="46" y="30" width="8" height="8" rx="1" fill="#17384A" stroke="#38BDF8" stroke-width="1.5"/>
+                            <line x1="54" y1="28" x2="54" y2="40" stroke="#38BDF8" stroke-width="2"/>
+                            <!-- Base -->
+                            <rect x="18" y="50" width="24" height="4" rx="1" fill="#17384A" stroke="#38BDF8" stroke-width="1"/>
+                        </svg>
+                    </div>
+                    <div class="sme-asset-title">Dyeing / Water Pump</div>
+                    <div class="sme-asset-id">PUMP_01</div>
+                    <div class="sme-asset-tag">Fluid Circulation (30 kW)</div>
+                </div>
+
+                <!-- Asset 4: HVAC / Climate Control -->
+                <div class="sme-asset-card" style="animation-delay: 0.6s;">
+                    <div class="sme-asset-status-dot"></div>
+                    <div class="sme-asset-icon-box">
+                        <svg class="sme-asset-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Air Handler Box -->
+                            <rect x="10" y="14" width="44" height="36" rx="4" fill="#0E2A38" stroke="#18E06F" stroke-width="2"/>
+                            <!-- Fan Grille -->
+                            <circle cx="32" cy="32" r="12" fill="#17384A" stroke="#38BDF8" stroke-width="1.5"/>
+                            <!-- Fan Blades -->
+                            <path d="M32 20C32 26 38 32 38 32C32 32 32 38 32 44C32 38 26 32 26 32C32 32 32 26 32 20Z" fill="#18E06F"/>
+                            <!-- Louvers / Vents -->
+                            <line x1="14" y1="20" x2="16" y2="20" stroke="#38BDF8" stroke-width="2"/>
+                            <line x1="14" y1="26" x2="16" y2="26" stroke="#38BDF8" stroke-width="2"/>
+                            <line x1="14" y1="32" x2="16" y2="32" stroke="#38BDF8" stroke-width="2"/>
+                            <line x1="48" y1="20" x2="50" y2="20" stroke="#38BDF8" stroke-width="2"/>
+                            <line x1="48" y1="26" x2="50" y2="26" stroke="#38BDF8" stroke-width="2"/>
+                            <line x1="48" y1="32" x2="50" y2="32" stroke="#38BDF8" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="sme-asset-title">HVAC / Climate Control</div>
+                    <div class="sme-asset-id">HVAC_01</div>
+                    <div class="sme-asset-tag">Humidity & Temp (55 kW)</div>
+                </div>
+            </div>
+
+            <!-- Telemetry Convergence & AI Hub -->
+            <div class="sme-telemetry-section">
+                <div class="sme-telemetry-wires">
+                    <div class="sme-wire sme-wire-1"></div>
+                    <div class="sme-wire sme-wire-2"></div>
+                    <div class="sme-wire sme-wire-3"></div>
+                    <div class="sme-wire sme-wire-4"></div>
+                </div>
+
+                <div class="sme-ai-hub">
+                    <div class="sme-ai-hub-icon">⚙️</div>
+                    <div class="sme-ai-hub-text">
+                        <span class="sme-ai-hub-title">⚡ AI ENERGY INTELLIGENCE</span>
+                        <span class="sme-ai-hub-sub">Neural Telemetry Aggregation & Multi-Dimensional Diagnostic Engine</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Industrial Process Progression Sequence -->
+            <div class="sme-process-seq">
+                <div class="sme-proc-pill sme-proc-1"><span>01</span> MEASURE</div>
+                <div class="sme-proc-arr">›</div>
+                <div class="sme-proc-pill sme-proc-2"><span>02</span> DETECT</div>
+                <div class="sme-proc-arr">›</div>
+                <div class="sme-proc-pill sme-proc-3"><span>03</span> DIAGNOSE</div>
+                <div class="sme-proc-arr">›</div>
+                <div class="sme-proc-pill sme-proc-4"><span>04</span> OPTIMIZE</div>
+                <div class="sme-proc-arr">›</div>
+                <div class="sme-proc-pill sme-proc-5"><span>05</span> QUANTIFY</div>
+                <div class="sme-proc-arr">›</div>
+                <div class="sme-proc-pill sme-proc-6"><span>06</span> DECIDE</div>
+            </div>
+
+            <!-- Dynamic Status Bar -->
+            <div class="sme-loading-status-area">
+                <div class="sme-status-text-anim">
+                    <span class="sme-status-msg sme-msg-1">Connecting factory intelligence...</span>
+                    <span class="sme-status-msg sme-msg-2">Loading machine telemetry...</span>
+                    <span class="sme-status-msg sme-msg-3">Initializing energy intelligence...</span>
+                    <span class="sme-status-msg sme-msg-4">Preparing industrial insights...</span>
+                    <span class="sme-status-msg sme-msg-5">SME-EnergyIQ Ready</span>
+                </div>
+                <div class="sme-progress-track">
+                    <div class="sme-progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Data Honesty Footer Note -->
+            <div class="sme-loading-footer">
+                Telemetry Mode: Pre-calibrated Synthetic Industrial Dataset | 4 Active Textile Machines
+            </div>
+        </div>
+    </div>
+
+    <style>
+    /* Loading Interface Scoped Styles */
+    .sme-loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: radial-gradient(circle at 50% 30%, #0B2230 0%, #061219 90%);
+        z-index: 99999999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto;
+        padding: 20px;
+        box-sizing: border-box;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .sme-loading-container {
+        width: 100%;
+        max-width: 900px;
+        background: linear-gradient(145deg, rgba(11, 30, 40, 0.98), rgba(6, 18, 25, 0.96));
+        border: 1px solid rgba(24, 224, 111, 0.35);
+        border-radius: 16px;
+        padding: 28px 30px 22px 30px;
+        box-shadow: 0 16px 50px rgba(0, 0, 0, 0.65), 0 0 30px rgba(24, 224, 111, 0.12);
+        position: relative;
+        overflow: hidden;
+        background-image:
+            linear-gradient(rgba(24, 224, 111, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(24, 224, 111, 0.03) 1px, transparent 1px);
+        background-size: 24px 24px;
+        animation: smeContainerFadeIn 0.4s ease-out forwards;
+    }
+
+    @keyframes smeContainerFadeIn {
+        from { opacity: 0; transform: scale(0.98); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Header */
+    .sme-loading-header {
+        text-align: center;
+        margin-bottom: 18px;
+    }
+    .sme-loading-logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 4px;
+    }
+    .sme-lightning-icon {
+        font-size: 2.0rem;
+        line-height: 1;
+        filter: drop-shadow(0 0 8px rgba(24, 224, 111, 0.6));
+    }
+    .sme-logo-text {
+        font-size: 2.0rem;
+        font-weight: 800;
+        color: #FFFFFF;
+        letter-spacing: -0.02em;
+    }
+    .sme-logo-accent {
+        color: #18E06F;
+    }
+    .sme-loading-subtitle {
+        font-size: 1.0rem;
+        font-weight: 700;
+        color: #18E06F;
+        letter-spacing: 0.02em;
+        margin-bottom: 6px;
+    }
+    .sme-loading-badge {
+        display: inline-block;
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: #38BDF8;
+        background: rgba(56, 189, 248, 0.10);
+        border: 1px solid rgba(56, 189, 248, 0.28);
+        padding: 3px 10px;
+        border-radius: 12px;
+        letter-spacing: 0.08em;
+    }
+
+    /* Hierarchy Flow */
+    .sme-flow-hierarchy {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 22px;
+        flex-wrap: wrap;
+    }
+    .sme-hier-step {
+        font-size: 0.70rem;
+        font-weight: 700;
+        color: #8CA3B3;
+        letter-spacing: 0.05em;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+    .sme-hier-arrow {
+        color: #38BDF8;
+        font-size: 0.80rem;
+        font-weight: 800;
+    }
+    .sme-hier-active {
+        color: #18E06F;
+        background: rgba(24, 224, 111, 0.12);
+        border-color: rgba(24, 224, 111, 0.35);
+    }
+
+    /* 4 Assets Grid */
+    .sme-assets-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+    .sme-asset-card {
+        background: linear-gradient(135deg, rgba(14, 42, 56, 0.70), rgba(11, 30, 40, 0.85));
+        border: 1px solid rgba(24, 224, 111, 0.25);
+        border-radius: 10px;
+        padding: 14px 10px;
+        text-align: center;
+        position: relative;
+        transition: all 0.3s ease;
+        animation: smeAssetFade 0.6s ease-out forwards;
+    }
+    @keyframes smeAssetFade {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .sme-asset-status-dot {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: #18E06F;
+        box-shadow: 0 0 6px #18E06F;
+        animation: smePulseDot 1.4s infinite ease-in-out;
+    }
+    @keyframes smePulseDot {
+        0%, 100% { opacity: 0.4; transform: scale(0.9); }
+        50% { opacity: 1; transform: scale(1.25); }
+    }
+    .sme-asset-icon-box {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 8px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .sme-asset-svg {
+        width: 44px;
+        height: 44px;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+    .sme-asset-title {
+        font-size: 0.80rem;
+        font-weight: 700;
+        color: #FFFFFF;
+        margin-bottom: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .sme-asset-id {
+        font-size: 0.70rem;
+        font-weight: 700;
+        color: #18E06F;
+        font-family: 'JetBrains Mono', monospace;
+        letter-spacing: 0.04em;
+        margin-bottom: 2px;
+    }
+    .sme-asset-tag {
+        font-size: 0.66rem;
+        color: #8CA3B3;
+    }
+
+    /* Telemetry Convergence & AI Hub */
+    .sme-telemetry-section {
+        position: relative;
+        margin-bottom: 18px;
+    }
+    .sme-telemetry-wires {
+        height: 18px;
+        display: flex;
+        justify-content: space-around;
+        position: relative;
+    }
+    .sme-wire {
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(180deg, #18E06F 0%, #38BDF8 100%);
+        opacity: 0.7;
+        position: relative;
+    }
+    .sme-wire::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -2px;
+        width: 6px;
+        height: 6px;
+        background: #FFFFFF;
+        border-radius: 50%;
+        box-shadow: 0 0 6px #38BDF8;
+        animation: smePulseTravel 1.6s infinite linear;
+    }
+    .sme-wire-1::after { animation-delay: 0.0s; }
+    .sme-wire-2::after { animation-delay: 0.4s; }
+    .sme-wire-3::after { animation-delay: 0.8s; }
+    .sme-wire-4::after { animation-delay: 1.2s; }
+
+    @keyframes smePulseTravel {
+        0% { top: 0%; opacity: 0; }
+        30% { opacity: 1; }
+        90% { top: 90%; opacity: 1; }
+        100% { top: 100%; opacity: 0; }
+    }
+
+    .sme-ai-hub {
+        background: linear-gradient(135deg, rgba(16, 48, 64, 0.90), rgba(11, 30, 40, 0.95));
+        border: 1px solid rgba(56, 189, 248, 0.40);
+        border-left: 4px solid #18E06F;
+        border-radius: 10px;
+        padding: 10px 18px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    }
+    .sme-ai-hub-icon {
+        font-size: 1.6rem;
+        line-height: 1;
+        animation: smeGearSpin 8s linear infinite;
+    }
+    @keyframes smeGearSpin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .sme-ai-hub-text {
+        display: flex;
+        flex-direction: column;
+    }
+    .sme-ai-hub-title {
+        font-size: 0.88rem;
+        font-weight: 800;
+        color: #FFFFFF;
+        letter-spacing: 0.06em;
+    }
+    .sme-ai-hub-sub {
+        font-size: 0.72rem;
+        color: #A8B8C5;
+    }
+
+    /* Process Progression Sequence */
+    .sme-process-seq {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4px;
+        margin-bottom: 20px;
+        background: rgba(8, 20, 28, 0.70);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 8px;
+        padding: 8px 12px;
+    }
+    .sme-proc-pill {
+        font-size: 0.70rem;
+        font-weight: 700;
+        color: #CBD5E1;
+        letter-spacing: 0.04em;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .sme-proc-pill span {
+        font-size: 0.62rem;
+        font-weight: 800;
+        color: #18E06F;
+        background: rgba(24, 224, 111, 0.12);
+        padding: 1px 4px;
+        border-radius: 3px;
+    }
+    .sme-proc-arr {
+        color: rgba(56, 189, 248, 0.6);
+        font-size: 0.80rem;
+        font-weight: 800;
+    }
+
+    /* Dynamic Status & Progress Bar */
+    .sme-loading-status-area {
+        margin-bottom: 12px;
+    }
+    .sme-status-text-anim {
+        height: 22px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 8px;
+    }
+    .sme-status-msg {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #38BDF8;
+        opacity: 0;
+        transform: translateY(10px);
+        animation-duration: 2.2s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+    }
+    .sme-msg-1 { animation-name: smeTextStage1; }
+    .sme-msg-2 { animation-name: smeTextStage2; }
+    .sme-msg-3 { animation-name: smeTextStage3; }
+    .sme-msg-4 { animation-name: smeTextStage4; }
+    .sme-msg-5 { animation-name: smeTextStage5; }
+
+    @keyframes smeTextStage1 {
+        0% { opacity: 0; transform: translateY(6px); }
+        8%, 20% { opacity: 1; transform: translateY(0); }
+        25% { opacity: 0; transform: translateY(-6px); }
+        100% { opacity: 0; }
+    }
+    @keyframes smeTextStage2 {
+        0%, 23% { opacity: 0; transform: translateY(6px); }
+        27%, 44% { opacity: 1; transform: translateY(0); }
+        48% { opacity: 0; transform: translateY(-6px); }
+        100% { opacity: 0; }
+    }
+    @keyframes smeTextStage3 {
+        0%, 46% { opacity: 0; transform: translateY(6px); }
+        50%, 68% { opacity: 1; transform: translateY(0); }
+        72% { opacity: 0; transform: translateY(-6px); }
+        100% { opacity: 0; }
+    }
+    @keyframes smeTextStage4 {
+        0%, 70% { opacity: 0; transform: translateY(6px); }
+        74%, 88% { opacity: 1; transform: translateY(0); }
+        92% { opacity: 0; transform: translateY(-6px); }
+        100% { opacity: 0; }
+    }
+    @keyframes smeTextStage5 {
+        0%, 90% { opacity: 0; transform: translateY(6px); }
+        94%, 100% { opacity: 1; transform: translateY(0); color: #18E06F; }
+    }
+
+    .sme-progress-track {
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .sme-progress-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #18E06F 0%, #38BDF8 70%, #18E06F 100%);
+        border-radius: 4px;
+        animation: smeProgressBar 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+    @keyframes smeProgressBar {
+        0% { width: 0%; }
+        25% { width: 30%; }
+        50% { width: 62%; }
+        75% { width: 85%; }
+        100% { width: 100%; }
+    }
+
+    /* Footer Note */
+    .sme-loading-footer {
+        text-align: center;
+        font-size: 0.68rem;
+        color: #64748B;
+        margin-top: 4px;
+    }
+
+    /* Mobile Responsive Adjustments */
+    @media (max-width: 768px) {
+        .sme-loading-container {
+            padding: 20px 14px;
+        }
+        .sme-logo-text {
+            font-size: 1.55rem;
+        }
+        .sme-lightning-icon {
+            font-size: 1.55rem;
+        }
+        .sme-assets-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        .sme-process-seq {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            text-align: center;
+        }
+        .sme-proc-arr {
+            display: none;
+        }
+        .sme-flow-hierarchy {
+            display: none;
+        }
+    }
+    </style>
+    """
+    return "\n".join(line.strip() for line in raw_html.splitlines())
+
+# Initial application loading experience (runs strictly once per browser session)
+if not st.session_state.get("app_loaded", False):
+    loading_placeholder = st.empty()
+    loading_placeholder.markdown(get_smart_manufacturing_loading_html(), unsafe_allow_html=True)
+    t_start = time.time()
+    try:
+        df, energy_summary, opt_results, carbon_report, df_alerts, df_sched_base, df_sched_opt = load_all_data()
+    except Exception as e:
+        loading_placeholder.empty()
+        st.error(f"Error loading platform data: {e}")
+        if st.button("Regenerate Data Pipeline"):
+            pipeline.run_full_pipeline()
+            st.rerun()
+        st.stop()
+    elapsed = time.time() - t_start
+    if elapsed < 2.3:
+        time.sleep(2.3 - elapsed)
+    loading_placeholder.empty()
+    st.session_state["app_loaded"] = True
+else:
+    try:
+        df, energy_summary, opt_results, carbon_report, df_alerts, df_sched_base, df_sched_opt = load_all_data()
+    except Exception as e:
+        st.error(f"Error loading platform data: {e}")
+        if st.button("Regenerate Data Pipeline"):
+            pipeline.run_full_pipeline()
+            st.rerun()
+        st.stop()
 
 # -------------------------------------------------------------
 # SIDEBAR NAVIGATION & CONTROLS
@@ -711,6 +1337,71 @@ if page == "🏭 Factory Overview":
     )
     st.plotly_chart(fig, use_container_width=True)
 
+    # ---------------------------------------------------------
+    # Production & Efficiency Section
+    # ---------------------------------------------------------
+    st.markdown("### **🏭 Production & Efficiency**")
+    st.markdown("Quantifying manufacturing throughput against specific energy intensity (*SEC = Total Energy / Production Output*).")
+
+    p_col1, p_col2, p_col3, p_col4 = st.columns(4)
+    total_yarn_prod = energy_summary["factory_overview"].get("total_yarn_production_kg", 60338.1)
+    with p_col1:
+        st.markdown(f"""
+        <div class="kpi-card">
+            <div class="kpi-title">Yarn Output (14-Day)</div>
+            <div class="kpi-value">{total_yarn_prod:,.0f} <span style="font-size:1rem;color:#64748B">kg</span></div>
+            <div class="kpi-sub">Avg Daily: {total_yarn_prod/14:,.0f} kg/day</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with p_col2:
+        st.markdown(f"""
+        <div class="kpi-card">
+            <div class="kpi-title">Electricity Consumed</div>
+            <div class="kpi-value">{total_energy_kwh:,.0f} <span style="font-size:1rem;color:#64748B">kWh</span></div>
+            <div class="kpi-sub">Avg Daily: {total_energy_kwh/14:,.0f} kWh/day</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with p_col3:
+        st.markdown(f"""
+        <div class="kpi-card">
+            <div class="kpi-title">Factory SEC (Yarn)</div>
+            <div class="kpi-value">{factory_sec:.3f} <span style="font-size:1rem;color:#64748B">kWh/kg</span></div>
+            <div class="kpi-sub">Energy Efficiency Benchmark: &le; 0.720</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with p_col4:
+        active_cnt = len(latest_df[latest_df["Machine_Status"].str.startswith("RUNNING")])
+        tot_cnt = len(latest_df)
+        st.markdown(f"""
+        <div class="kpi-card">
+            <div class="kpi-title">Fleet Operating State</div>
+            <div class="kpi-value" style="color:#10B981">{active_cnt}/{tot_cnt} Active</div>
+            <div class="kpi-sub">All Production Lines Nominal</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Machine-level production throughput & specific consumption breakdown table
+    st.markdown("##### **Machine-Level Output & Specific Energy Intensity**")
+    mb = energy_summary.get("machine_breakdown", {})
+    prod_table_rows = []
+    unit_map = {
+        "COMPRESSOR_01": "Nm³ Air",
+        "HVAC_01": "m³ Air",
+        "MOTOR_01": "kg Yarn",
+        "PUMP_01": "m³ Fluid"
+    }
+    for m_id, m_info in mb.items():
+        u = unit_map.get(m_id, "Units")
+        prod_table_rows.append({
+            "Machine": m_id,
+            "Equipment Type": m_info.get("type", "N/A"),
+            "Production Output": f"{m_info.get('total_production', 0):,.1f} {u}",
+            "Energy Consumed": f"{m_info.get('total_energy_kwh', 0):,.1f} kWh",
+            "Specific Consumption (SEC)": f"{m_info.get('sec_kwh_per_unit', 0):.4f} kWh/{u.split()[-1]}",
+            "Operating Status": "RUNNING (Active)"
+        })
+    st.dataframe(pd.DataFrame(prod_table_rows), use_container_width=True, hide_index=True)
+
 # -------------------------------------------------------------
 # PAGE 2: ENERGY & ToD MONITORING
 # -------------------------------------------------------------
@@ -733,8 +1424,16 @@ elif page == "⚡ Energy & ToD Monitoring":
                 [df["Timestamp"].min().date(), df["Timestamp"].max().date()]
             )
             
+        # Date range safety guard
+        if len(date_range) == 2:
+            start_date, end_date = date_range[0], date_range[1]
+        elif len(date_range) == 1:
+            start_date, end_date = date_range[0], date_range[0]
+        else:
+            start_date, end_date = df["Timestamp"].min().date(), df["Timestamp"].max().date()
+
         with c1:
-            mask = (df["Timestamp"].dt.date >= date_range[0]) & (df["Timestamp"].dt.date <= date_range[1])
+            mask = (df["Timestamp"].dt.date >= start_date) & (df["Timestamp"].dt.date <= end_date)
             df_filtered = df[mask]
             
             if sel_machine != "ALL MACHINES":
@@ -773,6 +1472,108 @@ elif page == "⚡ Energy & ToD Monitoring":
                 "Avg Power (kW)": f"{stats['avg_power_kw']} kW"
             })
         st.dataframe(pd.DataFrame(breakdown_rows), use_container_width=True, hide_index=True)
+
+        st.markdown("---")
+        st.markdown("#### **Factory Energy Share by Machine**")
+
+        # Dynamic machine-level energy share calculation from df over selected date window
+        date_mask_all = (df["Timestamp"].dt.date >= start_date) & (df["Timestamp"].dt.date <= end_date)
+        df_window_all = df[date_mask_all]
+
+        if not df_window_all.empty and df_window_all["Energy_kWh"].sum() > 0:
+            m_share_df = df_window_all.groupby("Machine_ID")["Energy_kWh"].sum().reset_index()
+        else:
+            m_share_df = df.groupby("Machine_ID")["Energy_kWh"].sum().reset_index()
+
+        total_window_energy = m_share_df["Energy_kWh"].sum()
+        m_share_df["Share_Pct"] = (m_share_df["Energy_kWh"] / total_window_energy) * 100
+        m_share_df = m_share_df.sort_values(by="Energy_kWh", ascending=False).reset_index(drop=True)
+
+        color_map = {
+            "HVAC_01": "#10B981",       # Emerald / Theme Green
+            "MOTOR_01": "#3B82F6",      # Industrial Blue
+            "COMPRESSOR_01": "#0EA5E9", # Sky Blue / Cyan
+            "PUMP_01": "#8B5CF6"        # Purple Accent
+        }
+
+        pull_list = [0.06 if m == sel_machine else 0 for m in m_share_df["Machine_ID"]] if sel_machine != "ALL MACHINES" else None
+
+        fig_share = px.pie(
+            m_share_df,
+            names="Machine_ID",
+            values="Energy_kWh",
+            title="Factory Energy Share by Machine",
+            color="Machine_ID",
+            color_discrete_map=color_map,
+            hole=0.45
+        )
+        fig_share.update_traces(
+            textposition="inside",
+            textinfo="percent+label",
+            pull=pull_list,
+            hovertemplate="<b>%{label}</b><br>Total Energy: %{value:,.1f} kWh<br>Factory Share: %{percent}<extra></extra>",
+            marker=dict(line=dict(color="#0B1E28", width=1.5))
+        )
+        fig_share.update_layout(
+            template="plotly_white",
+            height=420,
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=-0.15,
+                xanchor="center",
+                x=0.5
+            ),
+            margin=dict(l=20, r=20, t=50, b=40)
+        )
+        st.plotly_chart(fig_share, use_container_width=True)
+        st.caption("Shows each machine's contribution to total factory electricity consumption over the selected date window.")
+
+        st.markdown("---")
+        st.markdown("#### **Top Energy Consumers**")
+        st.markdown("Dynamic ranking of factory machines by electricity consumption over the selected observation window.")
+
+        type_map = {
+            "HVAC_01": "Humidification & HVAC",
+            "MOTOR_01": "Ring Frame Motor",
+            "COMPRESSOR_01": "Air Compressor",
+            "PUMP_01": "Dyeing Pump"
+        }
+
+        ranked_df = m_share_df.copy()
+        ranked_df["Rank"] = [f"#{i+1}" for i in range(len(ranked_df))]
+        ranked_df["Machine"] = ranked_df["Machine_ID"].apply(lambda m: f"{m} ({type_map.get(m, 'Industrial Load')})")
+        ranked_df["Energy Consumption (kWh)"] = ranked_df["Energy_kWh"].apply(lambda v: f"{v:,.1f} kWh")
+        ranked_df["Share of Factory Energy (%)"] = ranked_df["Share_Pct"].apply(lambda v: f"{v:.1f}%")
+
+        display_ranked = ranked_df[["Rank", "Machine", "Energy Consumption (kWh)", "Share of Factory Energy (%)"]]
+        st.dataframe(display_ranked, use_container_width=True, hide_index=True)
+
+        fig_ranked = px.bar(
+            m_share_df.sort_values(by="Energy_kWh", ascending=True),
+            x="Energy_kWh",
+            y="Machine_ID",
+            orientation="h",
+            text="Share_Pct",
+            color="Machine_ID",
+            color_discrete_map=color_map,
+            labels={"Energy_kWh": "Energy (kWh)", "Machine_ID": "Machine"}
+        )
+        fig_ranked.update_traces(
+            texttemplate="%{x:,.1f} kWh (%{text:.1f}%)",
+            textposition="outside",
+            cliponaxis=False
+        )
+        fig_ranked.update_layout(
+            template="plotly_white",
+            height=250,
+            showlegend=False,
+            margin=dict(l=20, r=80, t=10, b=30),
+            xaxis_title="Electricity Consumption (kWh)",
+            yaxis_title=""
+        )
+        st.plotly_chart(fig_ranked, use_container_width=True)
+
 
     with tab2:
         c1, c2 = st.columns(2)
@@ -897,6 +1698,104 @@ elif page == "🩺 Machine Health & Diagnostics":
         """)
     else:
         st.success(f"✅ Machine {selected_machine} operated within nominal ISO 10816 Class II vibration and thermal thresholds.")
+
+    # ---------------------------------------------------------
+    # Maintenance Intelligence Panel
+    # ---------------------------------------------------------
+    st.markdown("---")
+    st.markdown("### **🛠️ Maintenance Intelligence**")
+    st.markdown("Operator-friendly investigation summary synthesizing physics-based asset scoring, telemetry patterns, and AI anomaly detection.")
+
+    has_active_anomaly = latest_m["Severity"] in ["HIGH", "CRITICAL"] or latest_m["Health_Score"] < 80
+    has_historical_anomaly = not flagged_records.empty
+
+    current_health = latest_m["Health_Score"]
+    current_risk = latest_m["Risk_Level"]
+    current_state = latest_m["Machine_Status"]
+    current_sev = str(latest_m["Severity"])
+
+    if has_active_anomaly:
+        if selected_machine == "COMPRESSOR_01":
+            abnormal_sig = f"Active power elevation ({latest_m['Power_kW']:.1f} kW) with elevated unloader cycle pattern."
+            sugg_inv = "Inspect compressor unloader valve seating, intake air filters, and drive belt alignment."
+            poss_causes = "Possible unloader valve seal wear or non-productive idling during off-peak window."
+        elif selected_machine == "HVAC_01":
+            abnormal_sig = f"Thermal elevation ({latest_m['Temperature_C']:.1f}°C) exceeding nominal baseline headroom."
+            sugg_inv = "Inspect condenser coils for particulate clogging, verify fan blower belt, and check fresh air damper."
+            poss_causes = "Possible condenser fin fouling, restricted blower airflow, or high ambient thermal load."
+        elif selected_machine == "MOTOR_01":
+            abnormal_sig = f"ISO vibration elevation ({latest_m['Vibration_mm_s']:.2f} mm/s RMS) exceeding configured threshold."
+            sugg_inv = "Inspect foundation anchor fastenings, check V-belt tension, and perform bearing lubrication check."
+            poss_causes = "Possible mechanical unbalance, mounting looseness, or dynamic drive-system wear."
+        elif selected_machine == "PUMP_01":
+            abnormal_sig = f"Hydraulic flow variation with subtle multivariate energy intensity divergence."
+            sugg_inv = "Inspect suction strainer for textile lint obstruction, inspect impeller casing, and check mechanical seals."
+            poss_causes = "Possible suction restriction, impeller cavitation, or restricted circulation loop."
+        else:
+            abnormal_sig = f"Telemetry parameter divergence (Power: {latest_m['Power_kW']:.1f} kW, Temp: {latest_m['Temperature_C']:.1f}°C, Vib: {latest_m['Vibration_mm_s']:.2f} mm/s)."
+            sugg_inv = "Perform physical inspection of drive couplings, mountings, and thermal dissipation paths."
+            poss_causes = "Potential abnormal operating condition requiring field verification."
+    elif has_historical_anomaly:
+        if selected_machine == "COMPRESSOR_01":
+            abnormal_sig = f"Elevated unloader cycling and power spikes observed in {len(flagged_records)} historical events (latest snapshot nominal)."
+            sugg_inv = "Inspect compressor unloader valve seating, intake air filters, and drive belt alignment."
+            poss_causes = "Possible unloader valve seal wear or unloader cycling during non-productive intervals."
+        elif selected_machine == "HVAC_01":
+            abnormal_sig = f"Thermal elevation above expected baseline observed in {len(flagged_records)} historical events (latest snapshot nominal)."
+            sugg_inv = "Inspect condenser coils for particulate clogging, verify fan blower belt, and check fresh air damper."
+            poss_causes = "Possible condenser fin fouling, blower airflow restriction, or high ambient thermal load."
+        elif selected_machine == "MOTOR_01":
+            abnormal_sig = f"Elevated vibration exceeding configured threshold observed in {len(flagged_records)} historical events (latest snapshot nominal)."
+            sugg_inv = "Inspect foundation anchor fastenings, check V-belt tension, and perform bearing lubrication check."
+            poss_causes = "Possible mechanical unbalance, mounting looseness, or dynamic drive-system wear."
+        elif selected_machine == "PUMP_01":
+            abnormal_sig = f"Throughput divergence relative to power observed in {len(flagged_records)} historical events (latest snapshot nominal)."
+            sugg_inv = "Inspect suction strainer for textile lint obstruction, inspect impeller casing, and check mechanical seals."
+            poss_causes = "Possible suction restriction, impeller cavitation, or restricted circulation loop."
+        else:
+            abnormal_sig = f"Parameter excursions logged in {len(flagged_records)} historical events (latest snapshot nominal)."
+            sugg_inv = "Perform periodic physical inspection of drive couplings and thermal dissipation paths."
+            poss_causes = "Possible mechanical looseness or intermittent operating condition variation."
+    else:
+        abnormal_sig = "Vibration and thermal trends within nominal baseline operating range."
+        sugg_inv = "Continue routine condition monitoring of vibration and temperature trends."
+        poss_causes = "No active abnormal condition requiring investigation."
+
+    risk_border = "#10B981" if current_risk in ["LOW", "NOMINAL"] else ("#F59E0B" if current_risk == "MEDIUM" else "#EF4444")
+
+    st.markdown(f"""
+    <div style="background: linear-gradient(135deg, rgba(11, 30, 40, 0.98), rgba(15, 48, 55, 0.95)); border: 1px solid rgba(24, 224, 111, 0.35); border-left: 5px solid {risk_border}; border-radius: 10px; padding: 18px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; margin-bottom: 14px;">
+            <div style="font-size: 1.15rem; font-weight: 700; color: #FFFFFF;">
+                <span style="color: #18E06F;">MAINTENANCE INTELLIGENCE:</span> {selected_machine}
+            </div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: {risk_border}; padding: 3px 10px; border-radius: 4px; background: rgba(0,0,0,0.3); border: 1px solid {risk_border};">
+                RISK LEVEL: {current_risk}
+            </div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 14px; font-size: 0.88rem;">
+            <div><span style="color: #A8B8C5;">Machine:</span> <b style="color: #FFFFFF;">{selected_machine}</b></div>
+            <div><span style="color: #A8B8C5;">Current Health Score:</span> <b style="color: #18E06F;">{current_health} / 100</b></div>
+            <div><span style="color: #A8B8C5;">Operating State:</span> <b style="color: #FFFFFF;">{current_state}</b></div>
+            <div><span style="color: #A8B8C5;">Current Severity:</span> <b style="color: {risk_border};">{current_sev}</b></div>
+        </div>
+        <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 12px; font-size: 0.88rem; line-height: 1.5;">
+            <div style="margin-bottom: 8px;">
+                <strong style="color: #38BDF8;">Abnormal Signals:</strong>
+                <span style="color: #F1F5F9; margin-left: 6px;">{abnormal_sig}</span>
+            </div>
+            <div style="margin-bottom: 8px;">
+                <strong style="color: #FBBF24;">Suggested Investigation:</strong>
+                <span style="color: #F1F5F9; margin-left: 6px;">{sugg_inv}</span>
+            </div>
+            <div>
+                <strong style="color: #A78BFA;">Possible Causes:</strong>
+                <span style="color: #F1F5F9; margin-left: 6px;">{poss_causes}</span>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    st.caption("ℹ️ Telemetry-driven investigation hypotheses for maintenance guidance; requires on-site physical verification by qualified personnel.")
 
 # -------------------------------------------------------------
 # PAGE 4: EXPLAINABLE AI ALERTS
@@ -1045,7 +1944,14 @@ elif page == "🚨 Explainable AI Alerts":
         )
         act_items = [a.strip() for a in clean_act.split(".") if a.strip()]
 
-        with st.expander(f"[{alert['Severity']}] {alert['Machine_ID']} — {alert['Timestamp']} | Health: {alert['Health_Score']}/100"):
+        alert_key = f"{alert['Machine_ID']}_{alert['Timestamp']}"
+        if "alert_actions" not in st.session_state:
+            st.session_state["alert_actions"] = {}
+
+        current_action = st.session_state["alert_actions"].get(alert_key, "Pending")
+        status_suffix = f" • [{current_action}]" if current_action != "Pending" else ""
+
+        with st.expander(f"[{alert['Severity']}] {alert['Machine_ID']} — {alert['Timestamp']} | Health: {alert['Health_Score']}/100{status_suffix}"):
             st.markdown("**1. OBSERVED DATA (Sensor Evidence)**")
             for item in obs_items:
                 st.markdown(f"- {item}")
@@ -1061,6 +1967,35 @@ elif page == "🚨 Explainable AI Alerts":
             st.markdown("**4. RECOMMENDED ACTION (Maintenance Instruction)**")
             for act in act_items:
                 st.markdown(f"- {act}.")
+
+            st.markdown("---")
+            st.markdown("**5. OPERATOR ACTION & TRIAGE**")
+
+            action_badge_style = {
+                "Pending": "background:#334155; color:#F1F5F9; border:1px solid #64748B;",
+                "Acknowledged": "background:#064E3B; color:#34D399; border:1px solid #10B981;",
+                "Marked for Investigation": "background:#1E3A8A; color:#93C5FD; border:1px solid #3B82F6;"
+            }.get(current_action, "background:#334155; color:#F1F5F9;")
+
+            st.markdown(
+                f"<div style='margin-bottom:12px; font-size:0.92rem;'>"
+                f"<span style='color:#A8B8C5; font-weight:600;'>Triage Status:</span> "
+                f"<span style='display:inline-block; padding:3px 10px; border-radius:4px; font-weight:700; font-size:0.85rem; {action_badge_style}'>"
+                f"Operator Action: {current_action}</span></div>",
+                unsafe_allow_html=True
+            )
+
+            btn_col1, btn_col2, _ = st.columns([1.4, 1.8, 2.5])
+            with btn_col1:
+                if st.button("Acknowledge Alert", key=f"ack_{alert_key}"):
+                    st.session_state["alert_actions"][alert_key] = "Acknowledged"
+                    st.rerun()
+            with btn_col2:
+                if st.button("Mark for Investigation", key=f"inv_{alert_key}"):
+                    st.session_state["alert_actions"][alert_key] = "Marked for Investigation"
+                    st.rerun()
+
+            st.caption("ℹ️ Session-only UI triage state for prototype demonstration. Does not dispatch automated external work orders.")
 
 # -------------------------------------------------------------
 # PAGE 5: PRODUCTION OPTIMIZATION
